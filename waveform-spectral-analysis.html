@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spectral Analysis of Basic Waveforms</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e0e0e0;
+    padding: 40px 20px;
+  }
+  h1 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 48px;
+    letter-spacing: 1px;
+  }
+  .waveform-section {
+    max-width: 1100px;
+    margin: 0 auto 56px;
+    background: #12121a;
+    border-radius: 16px;
+    padding: 32px;
+    border: 1px solid #1e1e2e;
+  }
+  .waveform-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+  .waveform-name {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .waveform-formula {
+    font-size: 13px;
+    color: #888;
+    font-family: 'Courier New', monospace;
+  }
+  .waveform-description {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .charts {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+  }
+  .chart-container {
+    flex: 1;
+  }
+  .chart-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #666;
+    margin-bottom: 12px;
+  }
+  canvas {
+    width: 100%;
+    border-radius: 8px;
+    background: #0d0d14;
+  }
+  .harmonic-note {
+    font-size: 12px;
+    color: #777;
+    margin-top: 10px;
+    font-style: italic;
+  }
+  .color-sine { color: #4fc3f7; }
+  .color-square { color: #ff8a65; }
+  .color-saw { color: #aed581; }
+  .color-tri { color: #ce93d8; }
+
+  .legend {
+    max-width: 1100px;
+    margin: 0 auto 40px;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #aaa;
+  }
+  .legend-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+  }
+
+  .controls {
+    max-width: 1100px;
+    margin: 0 auto 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+  .controls label {
+    font-size: 13px;
+    color: #aaa;
+  }
+  .controls input[type="range"] {
+    width: 200px;
+    accent-color: #4fc3f7;
+  }
+  .controls .value {
+    font-size: 13px;
+    color: #fff;
+    min-width: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .charts { flex-direction: column; }
+    body { padding: 20px 12px; }
+    .waveform-section { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>SPECTRAL ANALYSIS OF BASIC WAVEFORMS</h1>
+<p class="subtitle">Waveform &amp; Frequency Spectrum — Intro to Synthesis</p>
+
+<div class="controls">
+  <label for="harmonicSlider">Harmonics shown:</label>
+  <input type="range" id="harmonicSlider" min="1" max="32" value="16">
+  <span class="value" id="harmonicValue">16</span>
+</div>
+
+<div id="sections"></div>
+
+<script>
+const WAVEFORMS = [
+  {
+    name: 'Sine Wave',
+    color: '#4fc3f7',
+    colorDim: 'rgba(79,195,247,0.15)',
+    formula: 'f(t) = sin(2πft)',
+    description: 'A single frequency with no harmonics. The purest possible tone — the building block of all other waveforms.',
+    harmonics: (n) => n === 1 ? 1 : 0,
+    waveform: (t) => Math.sin(2 * Math.PI * t),
+    harmonicNote: 'Fundamental only — no overtones'
+  },
+  {
+    name: 'Sawtooth Wave',
+    color: '#aed581',
+    colorDim: 'rgba(174,213,129,0.15)',
+    formula: 'f(t) = Σ (1/n) · sin(2πnft)',
+    description: 'Contains all harmonics (odd and even), each falling off as 1/n. The richest of the basic waveforms — a great starting point for subtractive synthesis.',
+    harmonics: (n) => 1 / n,
+    waveform: (t) => { let v=0; for(let n=1;n<=64;n++) v += (1/n)*Math.sin(2*Math.PI*n*t); return v * 0.78; },
+    harmonicNote: 'All harmonics: 1, 2, 3, 4, 5, 6 … amplitude = 1/n'
+  },
+  {
+    name: 'Square Wave',
+    color: '#ff8a65',
+    colorDim: 'rgba(255,138,101,0.15)',
+    formula: 'f(t) = Σ (1/n) · sin(2πnft), n odd',
+    description: 'Contains only odd harmonics (1, 3, 5, 7 …), each falling off as 1/n. Sounds hollow and woody — think clarinets and NES chiptunes.',
+    harmonics: (n) => n % 2 === 1 ? 1 / n : 0,
+    waveform: (t) => { let v=0; for(let n=1;n<=64;n+=2) v += (1/n)*Math.sin(2*Math.PI*n*t); return v * 0.78; },
+    harmonicNote: 'Odd harmonics only: 1, 3, 5, 7, 9 … amplitude = 1/n'
+  },
+  {
+    name: 'Triangle Wave',
+    color: '#ce93d8',
+    colorDim: 'rgba(206,147,216,0.15)',
+    formula: 'f(t) = Σ (1/n²) · sin(2πnft), n odd',
+    description: 'Contains only odd harmonics like the square wave, but they fall off much faster as 1/n². Softer and more mellow — close to a sine but with subtle character.',
+    harmonics: (n) => n % 2 === 1 ? 1 / (n * n) : 0,
+    waveform: (t) => { let v=0; for(let n=1;n<=64;n+=2) v += (Math.pow(-1,(n-1)/2)/(n*n))*Math.sin(2*Math.PI*n*t); return v * 1.2; },
+    harmonicNote: 'Odd harmonics only: 1, 3, 5, 7, 9 … amplitude = 1/n² (much quieter overtones)'
+  }
+];
+
+let numHarmonics = 16;
+const DPR = window.devicePixelRatio || 1;
+
+function createSections() {
+  const container = document.getElementById('sections');
+  container.innerHTML = '';
+
+  WAVEFORMS.forEach((wf, idx) => {
+    const section = document.createElement('div');
+    section.className = 'waveform-section';
+    section.innerHTML = `
+      <div class="waveform-header">
+        <span class="waveform-name" style="color:${wf.color}">${wf.name}</span>
+        <span class="waveform-formula">${wf.formula}</span>
+      </div>
+      <p class="waveform-description">${wf.description}</p>
+      <div class="charts">
+        <div class="chart-container">
+          <div class="chart-label">Waveform (Time Domain)</div>
+          <canvas id="wave-${idx}" height="180"></canvas>
+        </div>
+        <div class="chart-container">
+          <div class="chart-label">Frequency Spectrum</div>
+          <canvas id="spec-${idx}" height="180"></canvas>
+          <p class="harmonic-note">${wf.harmonicNote}</p>
+        </div>
+      </div>
+    `;
+    container.appendChild(section);
+  });
+}
+
+function setupCanvas(canvas, height) {
+  const rect = canvas.getBoundingClientRect();
+  const w = rect.width;
+  canvas.width = w * DPR;
+  canvas.height = height * DPR;
+  canvas.style.height = height + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(DPR, DPR);
+  return { ctx, w, h: height };
+}
+
+function drawWaveform(canvasId, wf) {
+  const canvas = document.getElementById(canvasId);
+  const { ctx, w, h } = setupCanvas(canvas, 180);
+
+  // Background grid
+  ctx.strokeStyle = '#1a1a28';
+  ctx.lineWidth = 1;
+  // Horizontal center line
+  ctx.beginPath();
+  ctx.moveTo(40, h / 2);
+  ctx.lineTo(w - 10, h / 2);
+  ctx.strokeStyle = '#2a2a3a';
+  ctx.stroke();
+
+  // Axis labels
+  ctx.fillStyle = '#555';
+  ctx.font = '10px monospace';
+  ctx.fillText('+', 8, 24);
+  ctx.fillText('0', 8, h / 2 + 4);
+  ctx.fillText('−', 8, h - 12);
+  ctx.fillText('Time →', w - 52, h - 6);
+
+  // Draw waveform
+  const marginL = 40, marginR = 10;
+  const plotW = w - marginL - marginR;
+  const cycles = 2.5;
+  const amp = (h / 2) - 24;
+
+  // Fill area
+  ctx.beginPath();
+  for (let i = 0; i <= plotW; i++) {
+    const t = (i / plotW) * cycles;
+    const y = h / 2 - wf.waveform(t) * amp;
+    if (i === 0) ctx.moveTo(marginL + i, y);
+    else ctx.lineTo(marginL + i, y);
+  }
+  ctx.lineTo(marginL + plotW, h / 2);
+  ctx.lineTo(marginL, h / 2);
+  ctx.closePath();
+  ctx.fillStyle = wf.colorDim;
+  ctx.fill();
+
+  // Stroke line
+  ctx.beginPath();
+  for (let i = 0; i <= plotW; i++) {
+    const t = (i / plotW) * cycles;
+    const y = h / 2 - wf.waveform(t) * amp;
+    if (i === 0) ctx.moveTo(marginL + i, y);
+    else ctx.lineTo(marginL + i, y);
+  }
+  ctx.strokeStyle = wf.color;
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+}
+
+function drawSpectrum(canvasId, wf) {
+  const canvas = document.getElementById(canvasId);
+  const { ctx, w, h } = setupCanvas(canvas, 180);
+
+  const marginL = 40, marginR = 10, marginB = 28, marginT = 12;
+  const plotW = w - marginL - marginR;
+  const plotH = h - marginT - marginB;
+
+  // Baseline
+  ctx.beginPath();
+  ctx.moveTo(marginL, marginT + plotH);
+  ctx.lineTo(marginL + plotW, marginT + plotH);
+  ctx.strokeStyle = '#2a2a3a';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Axis labels
+  ctx.fillStyle = '#555';
+  ctx.font = '10px monospace';
+  ctx.fillText('Amp', 2, marginT + 10);
+  ctx.fillText('Harmonic →', w - 76, h - 4);
+
+  // Compute bar width
+  const barGap = 4;
+  const totalBars = numHarmonics;
+  const barW = Math.max(4, (plotW - barGap * (totalBars + 1)) / totalBars);
+  const maxBarW = 28;
+  const actualBarW = Math.min(barW, maxBarW);
+
+  // Find max harmonic amplitude for scaling (always scale to fundamental = 1)
+  const maxAmp = 1;
+
+  for (let n = 1; n <= totalBars; n++) {
+    const amp = wf.harmonics(n);
+    if (amp === 0) continue;
+
+    const barH = (amp / maxAmp) * (plotH - 8);
+    const x = marginL + barGap + (n - 1) * (actualBarW + barGap);
+    const y = marginT + plotH - barH;
+
+    // Bar glow
+    const grad = ctx.createLinearGradient(x, y, x, marginT + plotH);
+    grad.addColorStop(0, wf.color);
+    grad.addColorStop(1, wf.colorDim);
+    ctx.fillStyle = grad;
+    ctx.fillRect(x, y, actualBarW, barH);
+
+    // Bar top highlight
+    ctx.fillStyle = wf.color;
+    ctx.fillRect(x, y, actualBarW, 2);
+
+    // Label
+    if (actualBarW >= 8 || n <= 10 || n % 2 === 1) {
+      ctx.fillStyle = amp > 0.15 ? '#ccc' : '#666';
+      ctx.font = '9px monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(n, x + actualBarW / 2, marginT + plotH + 14);
+    }
+  }
+  ctx.textAlign = 'start';
+
+  // Amplitude scale markers
+  ctx.fillStyle = '#444';
+  ctx.font = '9px monospace';
+  ctx.fillText('1.0', 8, marginT + 10);
+  ctx.fillText('0.5', 8, marginT + plotH / 2);
+
+  // Dashed guide lines
+  ctx.setLineDash([3, 3]);
+  ctx.strokeStyle = '#1e1e2e';
+  ctx.beginPath();
+  ctx.moveTo(marginL, marginT + plotH / 2);
+  ctx.lineTo(marginL + plotW, marginT + plotH / 2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function drawAll() {
+  WAVEFORMS.forEach((wf, idx) => {
+    drawWaveform(`wave-${idx}`, wf);
+    drawSpectrum(`spec-${idx}`, wf);
+  });
+}
+
+// Slider
+const slider = document.getElementById('harmonicSlider');
+const sliderVal = document.getElementById('harmonicValue');
+slider.addEventListener('input', () => {
+  numHarmonics = parseInt(slider.value);
+  sliderVal.textContent = numHarmonics;
+  drawAll();
+});
+
+// Init
+createSections();
+drawAll();
+
+// Redraw on resize
+window.addEventListener('resize', () => {
+  drawAll();
+});
+</script>
+
+</body>
+</html>
