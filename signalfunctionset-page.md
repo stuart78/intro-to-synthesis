@@ -6,7 +6,7 @@ location: Synth Library Portland
 
 # Intro to Synthesis
 
-A hands-on workshop at [Synth Library Portland](https://synthlibrarypdx.org/) on the fundamentals of subtractive synthesis. We started from nothing, built a complete classic voice in [VCV Rack](https://vcvrack.com/), and then spent the last stretch taking it apart.
+A hands-on workshop at [Synth Library Portland](https://www.synthlibraryportland.org) on the fundamentals of subtractive synthesis. We started from nothing, built a complete classic voice in [VCV Rack](https://vcvrack.com/), and then spent the last stretch taking it apart.
 
 The deck is a single HTML file with live Web Audio on nearly every slide: a clickable keyboard, a click-to-set sequencer, filter sweeps that redraw the spectrum as you drag, envelopes you can hold and release. I wanted the concepts to be things you could hear rather than diagrams you had to take my word for.
 
