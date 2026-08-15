@@ -5,37 +5,62 @@ Interactive single-file HTML slide deck for a workshop at Synth Library Portland
 ## File Structure
 
 - `intro-to-synthesis-slides.html` - the entire deck (single file, HTML + CSS + JS)
-- `intro-to-synthesis-outline.md` - workshop outline
+- `intro-to-synthesis-outline.md` - workshop outline (slide inventory + hands-on VCV sequence)
+- `talk-track.md` - speaker notes, one section per slide, then the VCV Rack walkthrough
+- `signalfunctionset-page.md` - write-up page for signalfunctionset.com
+- `Patches/` - the six VCV Rack patches used in the workshop
+- `Web Export/intro-to-synthesis-slides.html` - deploy copy, must be kept byte-identical to the root file
+
+When the deck changes, re-copy it to `Web Export/` in the same commit.
 
 ## Browser Testing
 
-The slide deck cannot be loaded or previewed via the Chrome browser tool (neither `file://` URLs nor localhost servers work). The user tests visually using the native file preview in Cowork mode, which Claude cannot see. Rely on JS syntax checking (`node -c`) and code review for validation.
+The deck **does** load in the in-app Browser pane via its `file://` URL, so it can be verified directly. Working approach:
+
+1. `mcp__Claude_Browser__navigate` to `file:///Users/sfs/code/Intro%20To%20Synthesis/intro-to-synthesis-slides.html` with `force: true` (a plain navigate will not pick up edits).
+2. `resize_window` to an explicit 16:9 landscape size (e.g. 1280x720). The pane defaults to a narrow portrait shape that squeezes the layout and makes everything look broken. Re-apply after every navigate.
+3. Drive the deck with `javascript_tool`: `goToSlide(n)` then the slide's own `draw*()` function. Read state back as a JSON string from an IIFE.
+
+Known limitations:
+- `computer` clicks land on the right element but **do not fire page event listeners**. To exercise a control, call `el.click()` from `javascript_tool` instead.
+- `zoom` region cropping is not supported; it returns the full screenshot.
+- Reading an `AudioParam.value` in the same tick as `setValueAtTime`/`setTargetAtTime` returns the *old* value. Set the state in one `javascript_tool` call and read it in the next, or the numbers will look off by one step.
+
+Still run `node -c` on the script block as the first check - it catches syntax errors faster than a reload.
 
 ## Slide Numbering
 
 Slides are **1-indexed** in conversation (matching the on-screen navigator), but **0-indexed** in code (`data-slide="0"` = slide 1).
 
+### Deep linking
+
+The current slide lives in the URL hash, 1-indexed to match the counter: `...slides.html#slide-6`. A refresh returns to that slide, and browser back/forward step through visited slides. A bare `#6` is accepted and normalised to `#slide-6`; out-of-range or unparseable hashes are ignored.
+
+Query params (`?slide=6`) are **not** an option here. The deck is opened from `file://`, which is a null-origin document, and `history.pushState`/`replaceState` throw `SecurityError` there - so a query param could never be updated without reloading. The hash needs no History API.
+
+Note this also means **the in-app Browser pane cannot test deep linking**: it serves the deck from a `data:` URL, which silently discards hash assignments. To verify, serve over HTTP instead - `preview_start` with `{name: "slides"}` uses the `.claude/launch.json` config, and the hash behaves normally on `http://localhost:8080`. Add a cache-busting query (`?v=2`) when re-testing after an edit; the browser will otherwise serve a stale copy.
+
 | Slide | Code Index | Title |
 |-------|-----------|-------|
-| 1 | 0 | Intro to Synthesis (title) |
-| 2 | 1 | What is Synthesis? |
-| 3 | 2 | Three Questions |
-| 4 | 3 | Voltage Basics |
-| 5 | 4 | CV = Audio |
-| 6 | 5 | Four Waveforms |
-| 7 | 6 | Fundamentals & Overtones |
-| 8 | 7 | The Filter |
-| 9 | 8 | Pitch & Frequency |
-| 10 | 9 | Noise |
-| 11 | 10 | 1 Volt per Octave |
-| 12 | 11 | Controlling Pitch |
-| 13 | 12 | Gates & Triggers |
-| 14 | 13 | Envelopes |
-| 15 | 14 | The VCA |
-| 16 | 15 | The LFO |
-| 17 | 16 | Envelope as Modulation |
-| 18 | 17 | Building the Classic Voice |
-| 19 | 18 | Breaking the Paradigm |
+| 1 | 0 | Intro to Synthesis (title + playable mini synth) |
+| 2 | 1 | Three Questions |
+| 3 | 2 | Voltage Basics |
+| 4 | 3 | CV = Audio |
+| 5 | 4 | Four Waveforms |
+| 6 | 5 | Fundamentals & Overtones |
+| 7 | 6 | The Filter |
+| 8 | 7 | Pitch & Frequency |
+| 9 | 8 | Noise |
+| 10 | 9 | 1 Volt per Octave |
+| 11 | 10 | Controlling Pitch |
+| 12 | 11 | Gates & Triggers |
+| 13 | 12 | Envelopes |
+| 14 | 13 | The VCA |
+| 15 | 14 | The LFO |
+| 16 | 15 | Envelope as Modulation |
+| 17 | 16 | Building the Classic Voice |
+| 18 | 17 | Build the Voice (7-step interactive builder) |
+| 19 | 18 | Next Steps |
 
 ## Chart / Visualization Style
 
@@ -118,7 +143,14 @@ These rules apply when writing slide HTML. Follow them for every new or modified
 ### Color in HTML
 - **Do NOT use `style="color: var(--accent-blue)"` or any inline color** on body text, `<strong>`, or `<span>` tags. Body text is always `#1a1a1a` (inherited).
 - `<strong>` is for bold emphasis only, never colored.
-- Headings (`h3`, `h4`) use inherited color by default. The **only exception** is the Timbre/Pitch/Rhythm semantic headings (slides 2, 3, 17) which use orange/blue/green to match diagram color coding. Do not add color to headings elsewhere.
+- Headings use inherited color by default. The **only exception** is a heading acting as a legend key for an adjacent diagram, where the color must match the corresponding element in the canvas. Current legend headings:
+
+  | Slide | Element | Colors |
+  |-------|---------|--------|
+  | 2 Three Questions | `h3` Timbre / Pitch / Rhythm | orange / blue / green |
+  | 3 Voltage Basics | `h4` Amplitude / Time / Waveshape | green / blue / orange |
+
+  If you add color to a heading, the matching canvas element must already use that color. Never color a heading for emphasis alone.
 
 ### Canvas text color
 - **Data labels** (voltages, notes, values): `#1a1a1a`
@@ -132,7 +164,9 @@ These rules apply when writing slide HTML. Follow them for every new or modified
 - CSS makes it non-italic with slightly heavier weight. No color - callouts stay dim.
 
 ### Punctuation
-- **No em dashes.** Use a regular hyphen with spaces (` - `) instead of `—` everywhere: HTML text, JS strings, comments, canvas labels.
+- **No em dashes.** Use a regular hyphen with spaces (` - `) instead of `—` everywhere: HTML text, JS strings, comments, canvas labels, and the markdown docs.
+- **Keep the spaces when replacing one.** `fast —20 Hz` becoming `fast -20 Hz` reads as negative twenty. It must be `fast - 20 Hz`. Check with `grep -n ' -[0-9]'` after any em dash sweep.
+- Numeric ranges use `to` or a plain hyphen (`20 Hz to 15 kHz`, `1-10 ms`), never an en dash, in anything user-visible.
 
 ### Checklist before finishing a slide
 1. No inline `font-size` except special-purpose items

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Intro to Synthesis - VCV Rack</title>
+<title>Intro to Synthesis</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Source+Code+Pro:wght@300;400;600&display=swap');
 
@@ -238,41 +238,73 @@
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <img src="images/Synth_Library_Logo_web-header.png.webp" alt="Synth Library Portland" style="height: 48px; object-fit: contain; align-self: flex-start;">
       </div>
-      <div class="g fade-up d1" style="grid-column: 1 / -1; grid-row: 2 / 4;">
+      <div class="g fade-up d1" style="grid-column: 1 / 6; grid-row: 2;">
         <h1>Intro to Synthesis</h1>
         <p class="subtitle">Foundations · The Classic Voice · Breaking the Paradigm</p>
       </div>
-      <div class="g fade-up d2" style="grid-column: 1 / -1; grid-row: 4;">
-        <p class="label">Timbre · Pitch · Rhythm</p>
+      <div class="g fade-up d2" style="grid-column: 6 / -1; grid-row: 2;">
+        <p>A synthesizer makes musical sound electronically. <strong>Subtractive synthesis</strong> starts with too many harmonics and takes some away, which is why this patch starts bright.</p>
+      </div>
+
+      <!-- Mini synth: two oscillators, a crossfader, a lowpass filter -->
+      <div class="g fade-up d2" style="grid-column: 1 / 4; grid-row: 3 / -1; justify-content: center; gap: 7px;">
+        <p class="label" style="margin-bottom: 2px;">Timbre · Pitch · Rhythm</p>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-family: 'Source Code Pro', monospace; font-size: 13px; color: var(--text-dim); min-width: 46px;">Osc A</span>
+          <div class="wave-btns" id="titleWaveA" style="margin: 0; gap: 4px;">
+            <button class="wave-btn active" data-twave="sine" style="padding: 5px 9px;">Sin</button>
+            <button class="wave-btn" data-twave="sawtooth" style="padding: 5px 9px;">Saw</button>
+            <button class="wave-btn" data-twave="square" style="padding: 5px 9px;">Sqr</button>
+            <button class="wave-btn" data-twave="triangle" style="padding: 5px 9px;">Tri</button>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-family: 'Source Code Pro', monospace; font-size: 13px; color: var(--text-dim); min-width: 46px;">Osc B</span>
+          <div class="wave-btns" id="titleWaveB" style="margin: 0; gap: 4px;">
+            <button class="wave-btn" data-twave="sine" style="padding: 5px 9px;">Sin</button>
+            <button class="wave-btn active" data-twave="sawtooth" style="padding: 5px 9px;">Saw</button>
+            <button class="wave-btn" data-twave="square" style="padding: 5px 9px;">Sqr</button>
+            <button class="wave-btn" data-twave="triangle" style="padding: 5px 9px;">Tri</button>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <label style="font-family: 'Source Code Pro', monospace; font-size: 13px; color: var(--text-dim); min-width: 46px;">Detune</label>
+          <input type="range" id="titleDetune" min="0" max="30" value="7" style="flex: 1; accent-color: var(--accent-blue); height: 4px;">
+          <span class="val" id="titleDetuneVal" style="min-width: 52px; font-family: 'Source Code Pro', monospace; font-size: 13px;">7 ct</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <label style="font-family: 'Source Code Pro', monospace; font-size: 13px; color: var(--text-dim); min-width: 46px;">A / B</label>
+          <input type="range" id="titleMix" min="0" max="100" value="50" style="flex: 1; accent-color: var(--accent-blue); height: 4px;">
+          <span class="val" id="titleMixVal" style="min-width: 52px; font-family: 'Source Code Pro', monospace; font-size: 13px;">50 · 50</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <label style="font-family: 'Source Code Pro', monospace; font-size: 13px; color: var(--text-dim); min-width: 46px;">Cutoff</label>
+          <input type="range" id="titleCutoff" min="0" max="1000" value="750" style="flex: 1; accent-color: var(--accent-orange); height: 4px;">
+          <span class="val" id="titleCutoffVal" style="min-width: 52px; font-family: 'Source Code Pro', monospace; font-size: 13px;">2.9 kHz</span>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <label style="font-family: 'Source Code Pro', monospace; font-size: 13px; color: var(--text-dim); min-width: 46px;">Reso</label>
+          <input type="range" id="titleRes" min="0" max="20" value="2" step="0.5" style="flex: 1; accent-color: var(--accent-orange); height: 4px;">
+          <span class="val" id="titleResVal" style="min-width: 52px; font-family: 'Source Code Pro', monospace; font-size: 13px;">2.0</span>
+        </div>
+
+        <button class="audio-btn" id="titleAudioBtn" data-orig-text="&#9654; Listen" style="margin-left: 0; margin-top: 4px;">&#9654; Listen</button>
+      </div>
+
+      <div class="g fade-up d2" style="grid-column: 4 / -1; grid-row: 3 / -1;">
+        <canvas id="titleScopeCanvas" width="900" height="360" style="width: 100%; height: 100%;"></canvas>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 1: What is Synthesis? -->
+  <!-- SLIDE 1: Three Questions -->
   <div class="slide" data-slide="1">
-    <div class="content">
-      <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
-        <p class="section-marker">Part 1 · Overview</p>
-        <h2>What is Synthesis?</h2>
-      </div>
-      <div class="g top fade-up d2" style="grid-column: 1 / 4; grid-row: 2;">
-        <p>Synthesis means building sound from scratch using electrical signals.</p>
-        <p style="margin-top: 12px;">In this workshop we focus on <strong>subtractive synthesis</strong> - start with a harmonically rich signal and sculpt it by removing what you don't want.</p>
-      </div>
-      <div class="g top fade-up d3" style="grid-column: 1 / 4; grid-row: 3;">
-        <p>Think of a sculptor starting with a block of marble. The raw oscillator is the block. The filter is the chisel.</p>
-      </div>
-      <div class="g fade-up d3" style="grid-column: 1 / 4; grid-row: 4;">
-        <p class="slide-callout">Start full. Carve away. <em>Shape what remains.</em></p>
-      </div>
-      <div class="g fade-up d2" style="grid-column: 4 / -1; grid-row: 2 / -1;">
-        <canvas id="subtractiveCanvas" width="800" height="400" style="width: 100%; height: 100%;"></canvas>
-      </div>
-    </div>
-  </div>
-
-  <!-- SLIDE 2: Three Questions -->
-  <div class="slide" data-slide="2">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Overview</p>
@@ -296,8 +328,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 3: Voltage Basics -->
-  <div class="slide" data-slide="3">
+  <!-- SLIDE 2: Voltage Basics -->
+  <div class="slide" data-slide="2">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Foundations</p>
@@ -321,8 +353,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 4: Key Insight - CV = Audio -->
-  <div class="slide" data-slide="4">
+  <!-- SLIDE 3: Key Insight - CV = Audio -->
+  <div class="slide" data-slide="3">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Key Insight</p>
@@ -336,12 +368,12 @@
           They're all just voltages changing over time. The only difference is <strong>speed</strong> and <strong>intent</strong>.
         </p>
         <p class="desc-text" style="margin-top: 16px;">
-          Audio: fast -20 Hz to 20 kHz<br>
-          Control: slow -0.1 Hz to ~30 Hz
+          Audio: fast - 20 Hz to 20 kHz<br>
+          Control: slow - 0.1 Hz to ~30 Hz
         </p>
       </div>
       <div class="g top fade-up d2" style="grid-column: 1 / 4; grid-row: 4;">
-        <p class="slide-callout">This is what makes modular synthesis powerful: <em>anything can control anything.</em></p>
+        <p class="slide-callout">Which is why, in modular, <em>anything can control anything.</em></p>
       </div>
       <div class="g fade-up d2" style="grid-column: 4 / -1; grid-row: 2 / -1;">
         <canvas id="cvAudioCanvas" width="800" height="400" style="width: 100%; height: 100%;"></canvas>
@@ -349,8 +381,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 5: Waveforms - Time Domain -->
-  <div class="slide" data-slide="5">
+  <!-- SLIDE 4: Waveforms - Time Domain -->
+  <div class="slide" data-slide="4">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Timbre</p>
@@ -370,7 +402,7 @@
       </div>
       <div class="g top fade-up d3" style="grid-column: 1 / 4; grid-row: 4;">
         <button class="audio-btn" id="waveAudioBtn">▶ Listen</button>
-        <p id="waveDesc" class="desc-text" style="min-height: 44px; margin-top: 8px;">A single frequency. No overtones. The purest possible tone - the building block of all other waveforms.</p>
+        <p id="waveDesc" class="desc-text" style="min-height: 44px; margin-top: 8px;">A single frequency, no overtones. Every other waveform is built from these.</p>
       </div>
       <div class="g fade-up d2" style="grid-column: 4 / -1; grid-row: 2 / -1;">
         <canvas id="waveformCanvas" width="1100" height="260" style="width: 100%; height: 100%;"></canvas>
@@ -378,19 +410,20 @@
     </div>
   </div>
 
-  <!-- SLIDE 6: Fundamentals & Overtones -->
-  <div class="slide" data-slide="6">
+  <!-- SLIDE 5: Fundamentals & Overtones -->
+  <div class="slide" data-slide="5">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Timbre · Pitch</p>
         <h2>Fundamentals &amp; Overtones</h2>
+        <p style="margin-top: 6px;">A pitched sound is never one frequency. The lowest is the <strong>fundamental</strong>, the note you name it by. Every quieter tone above it is an <strong>overtone</strong>, sitting at a whole-number multiple of that frequency.</p>
       </div>
       <div class="g top fade-up d2" style="grid-column: 1 / 6; grid-row: 2 / 4;">
         <p class="micro-label" style="margin-bottom: 8px;">Time Domain</p>
         <canvas id="overtoneCanvas" width="520" height="340" style="width: 100%; flex: 1; min-height: 0;"></canvas>
       </div>
       <div class="g top fade-up d2" style="grid-column: 6 / -1; grid-row: 2 / 4;">
-        <p class="micro-label" style="margin-bottom: 8px;">Spectral View</p>
+        <p class="micro-label" style="margin-bottom: 8px;">Spectral View (hover a bar)</p>
         <canvas id="overtoneSpectrumCanvas" width="520" height="340" style="width: 100%; flex: 1; min-height: 0;"></canvas>
       </div>
       <div class="g top fade-up d3" style="grid-column: 1 / 6; grid-row: 4;">
@@ -400,7 +433,12 @@
           <span class="val" id="overtoneVal" style="min-width: 90px; font-family: 'Source Code Pro', monospace; font-size: 13px;">Fundamental</span>
           <button class="audio-btn" id="overtoneAudioBtn" style="margin-left: 0;">▶ Listen</button>
         </div>
-        <div style="display: flex; align-items: center; gap: 8px; margin: 8px 0 0 0; flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 16px; margin-top: 4px;">
+          <label style="font-family: 'Source Code Pro', monospace; font-size: 13px; color: var(--text-dim);">Rolloff</label>
+          <input type="range" id="overtoneRolloff" min="1" max="3" step="0.1" value="1" style="flex: 1; max-width: 200px; accent-color: var(--accent-orange); height: 4px;">
+          <span class="val" id="overtoneRolloffVal" style="min-width: 90px; font-family: 'Source Code Pro', monospace; font-size: 13px;">1/n</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; margin: 4px 0 0 0; flex-wrap: wrap;">
           <div class="wave-btns" id="overtoneFundBtns" style="margin: 0;">
             <span class="micro-label" style="padding: 8px 0; margin-right: 4px;">Fundamental:</span>
             <button class="wave-btn" data-ofund="55">A1</button>
@@ -414,7 +452,9 @@
             <span class="micro-label" style="padding: 8px 0; margin-right: 4px;">Include:</span>
             <button class="wave-btn active" data-ofilter="all">All</button>
             <button class="wave-btn" data-ofilter="odd">Odd only</button>
-            <button class="wave-btn" data-ofilter="even">Even only</button>
+          </div>
+          <div class="wave-btns" style="margin: 0;">
+            <button class="wave-btn" id="overtoneInvertBtn">Invert</button>
           </div>
         </div>
       </div>
@@ -425,8 +465,8 @@
   </div>
 
 
-  <!-- SLIDE 7: The Filter -->
-  <div class="slide" data-slide="7">
+  <!-- SLIDE 6: The Filter -->
+  <div class="slide" data-slide="6">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Timbre</p>
@@ -479,8 +519,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 8: Pitch & Frequency -->
-  <div class="slide" data-slide="8">
+  <!-- SLIDE 7: Pitch & Frequency -->
+  <div class="slide" data-slide="7">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Pitch</p>
@@ -515,15 +555,15 @@
     </div>
   </div>
 
-  <!-- SLIDE 9: Noise -->
-  <div class="slide" data-slide="9">
+  <!-- SLIDE 8: Noise -->
+  <div class="slide" data-slide="8">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Pitch</p>
         <h2>Noise</h2>
       </div>
       <div class="g top fade-up d2" style="grid-column: 1 / 4; grid-row: 2;">
-        <p>Noise has no pitch - all frequencies at once. Filter it and patterns emerge: rumble, hiss, wind, surf.</p>
+        <p>Noise has no pitch. It is every frequency at once. Filter it and you get rumble, hiss, wind, surf.</p>
         <div class="wave-btns" id="noiseTypeBtns" style="margin: 12px 0 0 0;">
           <button class="wave-btn active" data-ntype="white">White</button>
           <button class="wave-btn" data-ntype="pink">Pink</button>
@@ -539,7 +579,7 @@
       </div>
       <div class="g top fade-up d4" style="grid-column: 1 / 4; grid-row: 4;">
         <button class="audio-btn" id="noiseAudioBtn">▶ Listen</button>
-        <p id="noiseDesc" class="desc-text" style="min-height: 36px; margin-top: 8px;">White noise: equal energy at every frequency - pure randomness.</p>
+        <p id="noiseDesc" class="desc-text" style="min-height: 36px; margin-top: 8px;">White noise: equal energy at every frequency.</p>
       </div>
       <div class="g fade-up d2" style="grid-column: 4 / -1; grid-row: 2 / -1;">
         <canvas id="noiseCanvas" width="800" height="400" style="width: 100%; height: 100%;"></canvas>
@@ -547,16 +587,16 @@
     </div>
   </div>
 
-  <!-- SLIDE 10: 1V/Oct -->
-  <div class="slide" data-slide="10">
+  <!-- SLIDE 9: 1V/Oct -->
+  <div class="slide" data-slide="9">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Pitch</p>
         <h2>1 Volt per Octave</h2>
       </div>
       <div class="g top fade-up d2" style="grid-column: 1 / 4; grid-row: 2;">
-        <p>Most synthesizers use <strong>voltage to control pitch.</strong> The standard: each additional volt doubles the frequency, up one octave.</p>
-        <p class="desc-text" style="margin-top: 10px;">The oscillator's <strong>tune knob</strong> sets the base pitch at 0V. From there, every +1V is one octave up. Every semitone is 1/12V (~0.083V).</p>
+        <p>Analog and modular synths use <strong>voltage to control pitch.</strong> The standard: each additional volt doubles the frequency, up one octave.</p>
+        <p class="desc-text" style="margin-top: 10px;">The <strong>tune knob</strong> sets the base pitch at 0V. Every +1V is an octave up, every semitone 1/12V (~0.083V).</p>
       </div>
       <div class="g top fade-up d3" style="grid-column: 1 / 4; grid-row: 3;">
         <div style="display: flex; align-items: center; gap: 12px;">
@@ -574,8 +614,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 11: Controlling Pitch -->
-  <div class="slide" data-slide="11">
+  <!-- SLIDE 10: Controlling Pitch -->
+  <div class="slide" data-slide="10">
     <div class="content" style="grid-template-rows: auto auto 1fr 80px;">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Pitch</p>
@@ -595,33 +635,39 @@
       <!-- Sequencer column -->
       <div class="g top fade-up d3" style="grid-column: 4 / 7; grid-row: 2;">
         <h4>Sequencer</h4>
-        <p class="desc-text">Programmed pattern. Each step sends a pitch CV in a loop.</p>
+        <p class="desc-text">Programmed pattern, looping. Same machine, three lists of voltages. Click any cell to write your own.</p>
       </div>
       <div class="g fade-up d3" style="grid-column: 4 / 7; grid-row: 3;">
         <canvas id="psSeqCanvas" width="400" height="100" style="width: 100%; height: 100%; cursor: pointer;"></canvas>
       </div>
-      <div class="g fade-up d3" style="grid-column: 4 / 7; grid-row: 4; display: flex; align-items: center;">
+      <div class="g fade-up d3" style="grid-column: 4 / 7; grid-row: 4; justify-content: flex-end; gap: 6px;">
+        <div class="wave-btns" id="psSeqModeBtns" style="margin: 0; gap: 4px;">
+          <button class="wave-btn active" data-seqmode="melody" style="padding: 5px 4px; flex: 1;">Melody</button>
+          <button class="wave-btn" data-seqmode="scale" style="padding: 5px 4px; flex: 1;">Scale</button>
+          <button class="wave-btn" data-seqmode="arp" style="padding: 5px 4px; flex: 1;">Arpeggio</button>
+        </div>
         <button class="audio-btn" id="psSeqPlayBtn" style="margin-left: 0; width: 100%;">&#9654; Play</button>
       </div>
       <!-- Sample & Hold column -->
       <div class="g top fade-up d4" style="grid-column: 7 / -1; grid-row: 2;">
         <h4>Sample &amp; Hold</h4>
-        <p class="desc-text">Grabs a random voltage on each clock tick. Generative melodies.</p>
+        <p class="desc-text">Grabs a random voltage on each clock tick. Quantize snaps those voltages to C major.</p>
       </div>
       <div class="g fade-up d4" style="grid-column: 7 / -1; grid-row: 3;">
         <canvas id="psSHCanvas" width="400" height="100" style="width: 100%; height: 100%;"></canvas>
       </div>
-      <div class="g fade-up d4" style="grid-column: 7 / -1; grid-row: 4; display: flex; align-items: center;">
+      <div class="g fade-up d4" style="grid-column: 7 / -1; grid-row: 4; justify-content: flex-end;">
         <div style="display: flex; gap: 8px; width: 100%;">
           <button class="audio-btn" id="psSHClockBtn" style="margin-left: 0; flex: 1;">&#9889; Clock</button>
           <button class="wave-btn" id="psSHAutoBtn" style="padding: 6px 12px;">Auto</button>
+          <button class="wave-btn" id="psSHQuantBtn" style="padding: 6px 12px;">Quantize</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 12: Gates & Triggers -->
-  <div class="slide" data-slide="12">
+  <!-- SLIDE 11: Gates & Triggers -->
+  <div class="slide" data-slide="11">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Rhythm</p>
@@ -632,7 +678,7 @@
           <p style="margin-bottom: 12px;">A <strong>gate</strong> is a voltage that stays high as long as a key is held. A <strong>trigger</strong> is a brief pulse - just a click to say "now."</p>
           <p class="desc-text" style="margin-top: 4px;">
             Gate: on while held, off on release<br>
-            Trigger: short pulse (~1–10 ms)
+            Trigger: short pulse (~1-10 ms)
           </p>
         </div>
         <div>
@@ -652,8 +698,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 13: Envelopes -->
-  <div class="slide" data-slide="13">
+  <!-- SLIDE 12: Envelopes -->
+  <div class="slide" data-slide="12">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Rhythm</p>
@@ -703,16 +749,16 @@
     </div>
   </div>
 
-  <!-- SLIDE 14: The VCA -->
-  <div class="slide" data-slide="14">
+  <!-- SLIDE 13: The VCA -->
+  <div class="slide" data-slide="13">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Dynamics</p>
         <h2>The VCA</h2>
       </div>
       <div class="g top fade-up d2" style="grid-column: 1 / 4; grid-row: 2;">
-        <p style="margin-bottom: 10px;">A Voltage Controlled Amplifier scales one signal by another. It's a volume knob that other modules can turn.</p>
-        <p>The envelope generates a shape - the VCA <strong>applies</strong> it. Without a VCA, there's no way to start and stop notes.</p>
+        <p style="margin-bottom: 10px;">A Voltage Controlled Amplifier is a volume knob other modules can turn.</p>
+        <p>The envelope makes a shape. The VCA <strong>applies</strong> it.</p>
       </div>
       <div class="g top fade-up d3" style="grid-column: 1 / 4; grid-row: 3;">
         <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -730,7 +776,7 @@
       </div>
       <div class="g top fade-up d4" style="grid-column: 1 / 4; grid-row: 4; display: flex; flex-direction: column; justify-content: space-between;">
         <button class="audio-btn" id="vcaAudioBtn" data-orig-text="▶ Listen" style="margin-left: 0;">▶ Listen</button>
-        <p class="slide-callout" style="margin-top: 10px;">The VCA is the invisible instrument - <em>it turns voltage into expression.</em></p>
+        <p class="slide-callout" style="margin-top: 10px;">Without one, the oscillator <em>just drones.</em></p>
       </div>
       <div class="g fade-up d2" style="grid-column: 4 / -1; grid-row: 2 / -1;">
         <canvas id="vcaCanvas" width="800" height="400" style="width: 100%; height: 100%;"></canvas>
@@ -738,8 +784,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 15: The LFO -->
-  <div class="slide" data-slide="15">
+  <!-- SLIDE 14: The LFO -->
+  <div class="slide" data-slide="14">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Modulation</p>
@@ -782,8 +828,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 16: Envelope as Modulation -->
-  <div class="slide" data-slide="16">
+  <!-- SLIDE 15: Envelope as Modulation -->
+  <div class="slide" data-slide="15">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 1 · Modulation</p>
@@ -823,8 +869,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 17: Building the Classic Voice -->
-  <div class="slide" data-slide="17">
+  <!-- SLIDE 16: Building the Classic Voice -->
+  <div class="slide" data-slide="16">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
         <p class="section-marker">Part 2 · Signal Path</p>
@@ -834,42 +880,88 @@
         <p>Released in 1970, the Minimoog defined the architecture of the synthesizer. Nearly every synth since follows this template.</p>
       </div>
       <div class="g top fade-up d2" style="grid-column: 1 / 4; grid-row: 3;">
-        <p>We'll recreate this signal path in VCV Rack, then break it apart to explore what modular makes possible.</p>
+        <p>We'll build this signal path one block at a time, then break it apart to see what modular makes possible.</p>
       </div>
       <div class="g top fade-up d3" style="grid-column: 1 / 4; grid-row: 4;">
-        <p class="slide-callout">First: the fixed path. Then: <em>what happens when you remove the limits.</em></p>
+        <p class="slide-callout">One signal path, no patch cables, <em>and no say in the order.</em></p>
       </div>
       <div class="g fade-up d2" style="grid-column: 4 / -1; grid-row: 2 / -1; display: flex; align-items: center; justify-content: center;">
-        <img src="images/minimoog.png" alt="Minimoog synthesizer" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px;">
+        <img src="images/minimoog.webp" alt="Minimoog synthesizer" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px;">
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 18: Breaking the Paradigm -->
+  <!-- SLIDE 17: Build the Voice -->
+  <div class="slide" data-slide="17">
+    <div class="content">
+      <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
+        <p class="section-marker">Part 2 · Build</p>
+        <h2>Build the Voice</h2>
+      </div>
+      <div class="g top fade-up d2" style="grid-column: 1 / 4; grid-row: 2 / -1; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <p class="micro-label" id="buildStepLabel" style="margin-bottom: 4px;">Step 1 of 7</p>
+          <h4 id="buildStepTitle">Oscillator</h4>
+          <p id="buildStepBody" style="margin-bottom: 10px;">One oscillator straight to the output.</p>
+          <p id="buildStepListen" class="desc-text"></p>
+        </div>
+        <div>
+          <div id="buildDepthRow" style="display: none; align-items: center; gap: 10px; margin-bottom: 10px;">
+            <label style="font-family: 'Source Code Pro', monospace; font-size: 13px; color: var(--text-dim); min-width: 76px;">LFO depth</label>
+            <input type="range" id="buildDepth" min="0" max="100" value="35" style="flex: 1; accent-color: var(--accent-purple); height: 4px;">
+            <span class="val" id="buildDepthVal" style="min-width: 56px; font-family: 'Source Code Pro', monospace; font-size: 13px;">420 Hz</span>
+          </div>
+          <div class="wave-btns" id="buildWaveBtns" style="margin: 0 0 10px 0;">
+            <button class="wave-btn" data-bwave="sine">Sine</button>
+            <button class="wave-btn active" data-bwave="sawtooth">Saw</button>
+            <button class="wave-btn" data-bwave="square">Sqr</button>
+            <button class="wave-btn" data-bwave="triangle">Tri</button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button class="wave-btn" id="buildPrevBtn" style="padding: 8px 14px;">&#9664;</button>
+            <button class="wave-btn" id="buildNextBtn" style="padding: 8px 14px;">&#9654;</button>
+            <button class="audio-btn" id="buildAudioBtn" data-orig-text="&#9654; Listen" style="margin-left: 0; flex: 1;">&#9654; Listen</button>
+          </div>
+        </div>
+      </div>
+      <div class="g fade-up d2" style="grid-column: 4 / -1; grid-row: 2 / -1;">
+        <canvas id="buildCanvas" width="900" height="420" style="width: 100%; height: 100%;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 18: Next Steps -->
   <div class="slide" data-slide="18">
     <div class="content">
       <div class="g top fade-up" style="grid-column: 1 / -1; grid-row: 1;">
-        <p class="section-marker">Part 3 · Modular</p>
-        <h2>Breaking the Paradigm</h2>
+        <p class="section-marker">After Today</p>
+        <h2>Next Steps</h2>
       </div>
-      <div class="g fade-up d2" style="grid-column: 1 / -1; grid-row: 2 / 4;">
-        <canvas id="paradigmCanvas" width="1200" height="400" style="width: 100%; height: 100%;"></canvas>
+
+      <div class="g top fade-up d2" style="grid-column: 1 / 4; grid-row: 2 / -1;">
+        <h4>Start for free</h4>
+        <p style="margin-bottom: 10px;">Download <strong>VCV Rack</strong>. Same software we used today, and it costs nothing.</p>
+        <p style="margin-bottom: 10px;">Befaco, Mutable Instruments, 4ms, ALM/Busy Circuits, Bastl and Erica Synths all have official modules in the library, free or cheap. Try the hardware before you buy it.</p>
+        <p>Try my <strong>SignalFunctionSet</strong> modules while you are in there.</p>
+        <p class="desc-text" style="margin-top: 10px;">vcvrack.com</p>
       </div>
-      <!-- Bottom: What modular opens up -->
-      <div class="g top fade-up d3" style="grid-column: 1 / 4; grid-row: 4; border-top: 2px solid var(--text); padding-top: 10px;">
-        <p class="micro-label" style="margin-bottom: 4px;">Modular</p>
-        <p style="font-weight: 600; color: var(--accent-orange); margin-bottom: 2px;">Timbre</p>
-        <p class="desc-text">FM, ring mod, waveshaping, self-oscillating filters</p>
+
+      <div class="g top fade-up d3" style="grid-column: 4 / 7; grid-row: 2 / -1;">
+        <h4>Borrow the hardware</h4>
+        <p style="margin-bottom: 10px;">Join <strong>Synth Library</strong> and take gear home. On the shelf right now:</p>
+        <p>Moog Mother-32<br>
+           Instruo Seashell<br>
+           Korg Monologue<br>
+           Make Noise 0-Coast<br>
+           Pittsburgh Modular (various)</p>
+        <p class="desc-text" style="margin-top: 10px;">synthlibraryportland.org</p>
       </div>
-      <div class="g top fade-up d3" style="grid-column: 4 / 7; grid-row: 4; border-top: 2px solid var(--text); padding-top: 10px;">
-        <p class="micro-label" style="visibility: hidden; margin-bottom: 4px;">.</p>
-        <p style="font-weight: 600; color: var(--accent-blue); margin-bottom: 2px;">Pitch</p>
-        <p class="desc-text">Sequencers, LFOs, noise, other oscillators</p>
-      </div>
-      <div class="g top fade-up d4" style="grid-column: 7 / -1; grid-row: 4; border-top: 2px solid var(--text); padding-top: 10px;">
-        <p class="micro-label" style="visibility: hidden; margin-bottom: 4px;">.</p>
-        <p style="font-weight: 600; color: var(--accent-green); margin-bottom: 2px;">Rhythm</p>
-        <p class="desc-text">Clocks, dividers, generative feedback loops</p>
+
+      <div class="g top fade-up d4" style="grid-column: 7 / -1; grid-row: 2 / -1;">
+        <h4>Read a book</h4>
+        <p style="margin-bottom: 10px;"><strong>Welsh's Synthesizer Cookbook</strong>, Fred Welsh. Patch recipes for specific sounds.</p>
+        <p style="margin-bottom: 10px;"><strong>Electronic Music: Systems, Techniques, and Controls</strong>, Allen Strange. The classic text.</p>
+        <p><strong>Omri Cohen's cookbooks</strong>. VCV specific and current.</p>
       </div>
     </div>
   </div>
@@ -896,11 +988,43 @@ const slides = deck.querySelectorAll('.slide');
 const totalSlides = slides.length;
 let current = 0;
 
+// =============================================
+// DEEP LINKING
+// =============================================
+// The deck is normally opened straight off disk, and a file:// document has a
+// null origin, where history.pushState/replaceState throw a SecurityError.
+// That rules out ?slide=6 style query params, since they could not be updated
+// without reloading. The hash needs no permissions, survives a refresh, and
+// gives back/forward navigation for free.
+//
+// The hash is 1-indexed to match the on-screen counter: slide "6 / 19" is
+// #slide-6. Both #slide-6 and a bare #6 are accepted when reading.
+function slideFromHash() {
+  const m = /^#(?:slide-)?(\d+)$/.exec(location.hash || '');
+  if (!m) return null;
+  const n = parseInt(m[1], 10) - 1;
+  return (n >= 0 && n < totalSlides) ? n : null;
+}
+
+function writeHash() {
+  const want = '#slide-' + (current + 1);
+  if (location.hash !== want) location.hash = want;
+}
+
+// No echo guard needed. A hashchange we caused ourselves parses back to the
+// slide we are already on, so the n !== current test swallows it, and the
+// early return in writeHash stops a navigation from re-emitting.
+window.addEventListener('hashchange', () => {
+  const n = slideFromHash();
+  if (n !== null && n !== current) goToSlide(n);
+});
+
 function goToSlide(n) {
   if (n < 0 || n >= totalSlides) return;
   slides[current].classList.remove('active');
   current = n;
   slides[current].classList.add('active');
+  writeHash();
   updateNav();
   drawCurrentSlide();
   // Stop any playing audio when changing slides
@@ -1002,10 +1126,27 @@ let activeNodes = [];
 let activeGains = []; // track gain nodes for click-free fade-out
 
 function getAudioCtx() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (!audioCtx) {
+    const Ctor = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new Ctor({ latencyHint: 'interactive' });
+  }
   if (audioCtx.state === 'suspended') audioCtx.resume();
   return audioCtx;
 }
+
+// Open the audio device on the first interaction with the deck rather than on
+// the first note. Safari creates an AudioContext suspended and resumes it
+// asynchronously, so a note scheduled straight after the first gesture is timed
+// against a clock that has not started yet and does not sound until the device
+// is up. Warming on pointerdown pays that cost during navigation instead, well
+// before anyone reaches a Listen or Clock button.
+function warmAudio() {
+  getAudioCtx();
+  window.removeEventListener('pointerdown', warmAudio, true);
+  window.removeEventListener('keydown', warmAudio, true);
+}
+window.addEventListener('pointerdown', warmAudio, true);
+window.addEventListener('keydown', warmAudio, true);
 
 function stopAllAudio() {
   // Fade out all tracked gain nodes to prevent clicks
@@ -1056,9 +1197,27 @@ function stopAllAudio() {
   // Clean up envelope mod state
   if (envModAnimFrame) { cancelAnimationFrame(envModAnimFrame); envModAnimFrame = null; }
   envModPhase = 'idle'; envModAudioNode = null;
+  // Clean up overtone slide state
+  overtoneAudioNode = null;
+  // Clean up title mini synth state
+  if (titleAnimFrame) { cancelAnimationFrame(titleAnimFrame); titleAnimFrame = null; }
+  if (titlePlaying) {
+    titlePlaying = false;
+    titleNodes = null;
+    if (typeof drawTitleSynth === 'function') drawTitleSynth();
+  }
+  titleNodes = null;
+  // Clean up build-the-voice state
+  if (buildClock) { clearInterval(buildClock); buildClock = null; }
+  if (buildPlaying) {
+    buildPlaying = false;
+    buildNodes = null;
+    if (typeof drawBuildVoice === 'function') drawBuildVoice();
+  }
+  buildNodes = null;
   // Clean up pitch sources (shared clock) state
   if (psClockInterval) { clearInterval(psClockInterval); psClockInterval = null; }
-  seqPlaying = false; seqCurrentStep = -1; shAutoPlaying = false;
+  seqPlaying = false; seqCurrentStep = -1; seqDisplayStep = -1; shAutoPlaying = false;
   const seqBtn = document.getElementById('psSeqPlayBtn');
   if (seqBtn) { seqBtn.classList.remove('playing'); seqBtn.textContent = '\u25B6 Play'; }
   const shAutoBtn = document.getElementById('psSHAutoBtn');
@@ -1138,6 +1297,17 @@ const DPR = window.devicePixelRatio || 1;
 function initCanvas(id, w, h) {
   const c = document.getElementById(id);
   if (!c) return null;
+  // Stash the authored inline sizing once, then restore it before measuring.
+  // Without this the style.width/height pinned below would freeze the canvas
+  // at whatever size it had on its first draw, so a canvas first drawn while
+  // its slide was small (or the window was) could never grow back and the
+  // resize handler would be a no-op.
+  if (c.dataset.baseW === undefined) {
+    c.dataset.baseW = c.style.width || '';
+    c.dataset.baseH = c.style.height || '';
+  }
+  c.style.width = c.dataset.baseW;
+  c.style.height = c.dataset.baseH;
   const rect = c.getBoundingClientRect();
   const cw = rect.width || w;
   const ch = rect.height || h;
@@ -1152,128 +1322,311 @@ function initCanvas(id, w, h) {
 }
 
 // =============================================
-// SLIDE 1: WHAT IS SYNTHESIS? (subtractive metaphor)
+// SLIDE 0: TITLE MINI SYNTH
 // =============================================
-function drawSubtractive() {
-  const r = initCanvas('subtractiveCanvas', 800, 400);
+// Two oscillators through a crossfader into a lowpass filter, with a real
+// triggered oscilloscope on the output. Playable while the room files in.
+const TITLE_BASE_FREQ = 110;  // A2
+const TITLE_CYCLES = 3;       // how many cycles fill the scope
+
+let titleWaveA = 'sine';
+let titleWaveB = 'sawtooth';
+let titleMix = 50;            // 0 = all A, 100 = all B
+let titleDetuneCents = 7;
+let titleCutoffPos = 750;     // slider position, mapped exponentially
+let titleResVal = 2;
+let titlePlaying = false;
+let titleNodes = null;
+let titleAnimFrame = null;
+
+function titleCutoffHz() { return filterSliderToFreq(titleCutoffPos); }
+
+// Equal power crossfade, so the middle of the fader is not a volume dip
+function titleGains() {
+  const x = titleMix / 100;
+  return { a: Math.cos(x * Math.PI / 2), b: Math.sin(x * Math.PI / 2) };
+}
+
+// Rough 24 dB/oct lowpass with a resonant lift at the corner. Only used for
+// the static preview when nothing is playing; the live trace is the real signal.
+function titleLPAtt(f, cutoff) {
+  const ratio = f / cutoff;
+  let att = ratio > 1 ? Math.pow(1 / ratio, 4) : 1;
+  if (titleResVal > 0.7) {
+    const d = Math.log2(ratio), bw = 0.35;
+    att *= 1 + (titleResVal / 7) * Math.exp(-(d * d) / (2 * bw * bw));
+  }
+  return att;
+}
+
+// Additive reconstruction of what the patch would look like, filtered and
+// unfiltered, so the drawn amplitude drops as the cutoff closes.
+function titleScopeComputed() {
+  const N = 700, HARM = 40;
+  const cutoff = titleCutoffHz();
+  const g = titleGains();
+  const defA = WAVE_HARMONICS[titleWaveA], defB = WAVE_HARMONICS[titleWaveB];
+  const det = Math.pow(2, titleDetuneCents / 1200);
+  const out = new Float32Array(N);
+  let refPeak = 0;
+  for (let i = 0; i < N; i++) {
+    const t = (i / N) * TITLE_CYCLES;
+    let v = 0, ref = 0;
+    for (let k = 1; k <= HARM; k++) {
+      const aA = defA.amp(k);
+      if (aA) {
+        const s = aA * Math.sin(2 * Math.PI * k * t) * g.a;
+        v += s * titleLPAtt(k * TITLE_BASE_FREQ, cutoff);
+        ref += s;
+      }
+      const aB = defB.amp(k);
+      if (aB) {
+        const s = aB * Math.sin(2 * Math.PI * k * det * t) * g.b;
+        v += s * titleLPAtt(k * TITLE_BASE_FREQ * det, cutoff);
+        ref += s;
+      }
+    }
+    out[i] = v;
+    refPeak = Math.max(refPeak, Math.abs(ref));
+  }
+  const scale = refPeak > 0 ? 0.80 / refPeak : 0;
+  for (let i = 0; i < N; i++) out[i] *= scale;
+  return out;
+}
+
+// Live trace, triggered on a rising zero crossing so it stands still
+function titleScopeLive() {
+  if (!titleNodes) return null;
+  const an = titleNodes.analyser;
+  const buf = new Float32Array(an.fftSize);
+  an.getFloatTimeDomainData(buf);
+  const perCycle = getAudioCtx().sampleRate / TITLE_BASE_FREQ;
+  const need = Math.min(buf.length - 1, Math.round(perCycle * TITLE_CYCLES));
+  let start = 0;
+  for (let i = 0; i < buf.length - need - 1; i++) {
+    if (buf[i] <= 0 && buf[i + 1] > 0) { start = i; break; }
+  }
+  const seg = buf.subarray(start, start + need);
+  // Master sits at 0.22. The extra headroom leaves room for resonant overshoot
+  // to show as overshoot rather than flattening against the frame.
+  const out = new Float32Array(seg.length);
+  for (let i = 0; i < seg.length; i++) out[i] = seg[i] / 0.30;
+  return out;
+}
+
+// Display-only soft knee. Everything up to 0.85 is exactly linear, so ordinary
+// traces and amplitude changes read truthfully, while a resonant peak compresses
+// into the remaining band instead of flattening against the frame.
+function titleSoftKnee(v) {
+  const knee = 0.85, max = 1.06;
+  const a = Math.abs(v);
+  if (a <= knee) return v;
+  const room = max - knee;
+  const c = knee + room * (1 - Math.exp(-(a - knee) / room));
+  return v < 0 ? -c : c;
+}
+
+function drawTitleSynth() {
+  const r = initCanvas('titleScopeCanvas', 900, 360);
   if (!r) return;
   const { ctx, w, h } = r;
 
-  const mL = 52, mR = 30, mT = 30, mB = 30;
-  const pW = w - mL - mR;
-  const panelH = (h - mT - mB - 60) / 2; // two panels with gap
-  const gap = 60;
+  const mL = 64, mR = 26, mT = 26, mB = 44;
+  const pW = w - mL - mR, pH = h - mT - mB;
+  const midY = mT + pH / 2;
 
-  // --- Top panel: raw sawtooth ---
-  const topY = mT;
-  const topMid = topY + panelH / 2;
-
-  // Border
+  // Plot frame
   ctx.strokeStyle = '#bbb'; ctx.lineWidth = 1;
-  ctx.strokeRect(mL, topY, pW, panelH);
+  ctx.strokeRect(mL, mT, pW, pH);
+
+  // Cycle divisions
+  ctx.strokeStyle = '#ececec'; ctx.lineWidth = 1;
+  for (let c = 1; c < TITLE_CYCLES; c++) {
+    const x = mL + (c / TITLE_CYCLES) * pW;
+    ctx.beginPath(); ctx.moveTo(x, mT); ctx.lineTo(x, mT + pH); ctx.stroke();
+  }
 
   // Zero line
-  ctx.strokeStyle = '#ddd'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(mL, topMid); ctx.lineTo(mL + pW, topMid); ctx.stroke();
+  ctx.strokeStyle = '#bbb'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(mL, midY); ctx.lineTo(mL + pW, midY); ctx.stroke();
 
-  // Label
-  ctx.font = '700 10px Source Code Pro, monospace';
-  ctx.fillStyle = '#cc4400'; ctx.textAlign = 'left';
-  ctx.fillText('RAW OSCILLATOR', mL + 4, topY + 12);
-
-  // Sawtooth wave - bright, all harmonics
-  const amp = panelH * 0.4;
-  const freq = 5;
-  ctx.beginPath();
-  ctx.strokeStyle = '#cc4400'; ctx.lineWidth = 2;
-  for (let i = 0; i <= pW; i++) {
-    const t = (i / pW) * freq;
-    const sawVal = 2 * (t - Math.floor(t + 0.5));
-    const px = mL + i;
-    const py = topMid - sawVal * amp;
-    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
-  }
-  ctx.stroke();
-
-  // Subtle fill
-  ctx.lineTo(mL + pW, topMid); ctx.lineTo(mL, topMid); ctx.closePath();
-  ctx.fillStyle = 'rgba(204, 68, 0, 0.05)';
-  ctx.fill();
-
-  // Right label
-  ctx.font = '600 10px Source Code Pro, monospace';
-  ctx.fillStyle = '#999'; ctx.textAlign = 'right';
-  ctx.fillText('All harmonics', mL + pW - 4, topY + 12);
-
-  // --- Arrow between panels ---
-  const arrowY = topY + panelH + gap / 2;
-  ctx.fillStyle = '#999';
+  // Y labels
+  ctx.fillStyle = '#1a1a1a';
   ctx.font = '600 12px Source Code Pro, monospace';
+  ctx.textAlign = 'right';
+  ctx.fillText('+', mL - 10, mT + 12);
+  ctx.fillText('0', mL - 10, midY + 5);
+  ctx.fillText('-', mL - 10, mT + pH - 4);
+
+  // Y axis title
+  ctx.save();
+  ctx.translate(18, midY);
+  ctx.rotate(-Math.PI / 2);
   ctx.textAlign = 'center';
-  ctx.fillText('Filter (chisel)', mL + pW / 2, arrowY - 8);
+  ctx.fillStyle = '#2e7d32';
+  ctx.font = '700 12px Source Code Pro, monospace';
+  ctx.fillText('AMPLITUDE', 0, 0);
+  ctx.restore();
 
-  // Down arrow
-  ctx.strokeStyle = '#999'; ctx.lineWidth = 2;
+  // X axis title
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#0066cc';
+  ctx.font = '700 12px Source Code Pro, monospace';
+  ctx.fillText(`TIME - ${TITLE_CYCLES} CYCLES AT ${TITLE_BASE_FREQ} Hz`, mL + pW / 2, h - 8);
+
+  // One period bracket over the first cycle
+  const cycW = pW / TITLE_CYCLES;
+  ctx.strokeStyle = '#0066cc'; ctx.lineWidth = 1.5;
   ctx.beginPath();
-  ctx.moveTo(mL + pW / 2, arrowY + 2);
-  ctx.lineTo(mL + pW / 2, arrowY + 18);
+  ctx.moveTo(mL + 2, mT - 10); ctx.lineTo(mL + cycW - 2, mT - 10);
+  ctx.moveTo(mL + 2, mT - 14); ctx.lineTo(mL + 2, mT - 6);
+  ctx.moveTo(mL + cycW - 2, mT - 14); ctx.lineTo(mL + cycW - 2, mT - 6);
   ctx.stroke();
-  // Arrowhead
+  ctx.fillStyle = '#0066cc';
+  ctx.font = '600 11px Source Code Pro, monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('9.1 ms', mL + cycW / 2, mT - 16);
+
+  // Trace
+  const data = titlePlaying ? titleScopeLive() : titleScopeComputed();
+  if (!data || !data.length) return;
+  const amp = pH * 0.44;
+  ctx.strokeStyle = '#0066cc';
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round'; ctx.lineCap = 'round';
   ctx.beginPath();
-  ctx.moveTo(mL + pW / 2 - 5, arrowY + 13);
-  ctx.lineTo(mL + pW / 2, arrowY + 20);
-  ctx.lineTo(mL + pW / 2 + 5, arrowY + 13);
-  ctx.stroke();
-
-  // --- Bottom panel: filtered (smoother) wave ---
-  const botY = topY + panelH + gap;
-  const botMid = botY + panelH / 2;
-
-  // Border
-  ctx.strokeStyle = '#bbb'; ctx.lineWidth = 1;
-  ctx.strokeRect(mL, botY, pW, panelH);
-
-  // Zero line
-  ctx.strokeStyle = '#ddd'; ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(mL, botMid); ctx.lineTo(mL + pW, botMid); ctx.stroke();
-
-  // Label
-  ctx.font = '700 10px Source Code Pro, monospace';
-  ctx.fillStyle = '#2e7d32'; ctx.textAlign = 'left';
-  ctx.fillText('AFTER FILTERING', mL + 4, botY + 12);
-
-  // Filtered wave - sawtooth harmonics with lowpass rolloff (less energy than raw)
-  ctx.beginPath();
-  ctx.strokeStyle = '#2e7d32'; ctx.lineWidth = 2.5;
-  for (let i = 0; i <= pW; i++) {
-    const t = (i / pW) * freq * Math.PI * 2;
-    // Sawtooth series with 2nd-order lowpass rolloff
-    let val = 0;
-    const cutoff = 2.5;
-    for (let n = 1; n <= 12; n++) {
-      const sawCoeff = Math.pow(-1, n + 1) / n;
-      const lpAtt = 1 / (1 + Math.pow(n / cutoff, 2));
-      val += sawCoeff * lpAtt * Math.sin(n * t);
-    }
-    const px = mL + i;
-    const py = botMid - val * amp * 0.9;
-    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  for (let i = 0; i < data.length; i++) {
+    const x = mL + (i / (data.length - 1)) * pW;
+    const y = midY - titleSoftKnee(data[i]) * amp;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
   }
   ctx.stroke();
 
-  // Subtle fill
-  ctx.lineTo(mL + pW, botMid); ctx.lineTo(mL, botMid); ctx.closePath();
-  ctx.fillStyle = 'rgba(46, 125, 50, 0.05)';
-  ctx.fill();
-
-  // Right label
-  ctx.font = '600 10px Source Code Pro, monospace';
-  ctx.fillStyle = '#999'; ctx.textAlign = 'right';
-  ctx.fillText('Shaped sound', mL + pW - 4, botY + 12);
+  // Idle hint
+  if (!titlePlaying) {
+    ctx.fillStyle = '#999';
+    ctx.font = '600 11px Source Code Pro, monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText('PREVIEW', mL + pW - 8, mT + 14);
+  }
 }
 
+function titleAnimLoop() {
+  if (!titlePlaying) return;
+  drawTitleSynth();
+  titleAnimFrame = requestAnimationFrame(titleAnimLoop);
+}
+
+function updateTitleAudio() {
+  if (!titleNodes) return;
+  const actx = getAudioCtx();
+  const now = actx.currentTime;
+  const g = titleGains();
+  titleNodes.oscA.type = titleWaveA;
+  titleNodes.oscB.type = titleWaveB;
+  titleNodes.oscB.detune.setTargetAtTime(titleDetuneCents, now, 0.01);
+  titleNodes.gA.gain.setTargetAtTime(g.a, now, 0.01);
+  titleNodes.gB.gain.setTargetAtTime(g.b, now, 0.01);
+  titleNodes.filter.frequency.setTargetAtTime(titleCutoffHz(), now, 0.01);
+  titleNodes.filter.Q.setTargetAtTime(titleResVal, now, 0.01);
+}
+
+function startTitleAudio() {
+  stopAllAudio();
+  const actx = getAudioCtx();
+
+  const oscA = actx.createOscillator();
+  oscA.type = titleWaveA;
+  oscA.frequency.value = TITLE_BASE_FREQ;
+  const oscB = actx.createOscillator();
+  oscB.type = titleWaveB;
+  oscB.frequency.value = TITLE_BASE_FREQ;
+  oscB.detune.value = titleDetuneCents;
+
+  const g = titleGains();
+  const gA = actx.createGain(); gA.gain.value = g.a;
+  const gB = actx.createGain(); gB.gain.value = g.b;
+
+  const filter = actx.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = titleCutoffHz();
+  filter.Q.value = titleResVal;
+
+  const master = actx.createGain();
+  master.gain.value = 0.22;
+
+  const analyser = actx.createAnalyser();
+  analyser.fftSize = 4096;
+
+  oscA.connect(gA); gA.connect(filter);
+  oscB.connect(gB); gB.connect(filter);
+  filter.connect(master);
+  master.connect(analyser);
+  master.connect(actx.destination);
+
+  oscA.start(); oscB.start();
+  activeNodes.push(oscA, oscB);
+  activeGains.push(master);
+
+  titleNodes = { oscA, oscB, gA, gB, filter, master, analyser };
+  titlePlaying = true;
+  const btn = document.getElementById('titleAudioBtn');
+  btn.classList.add('playing');
+  btn.textContent = '■ Stop';
+  titleAnimLoop();
+}
+
+// --- Title mini synth event listeners ---
+document.getElementById('titleAudioBtn').addEventListener('click', () => {
+  if (titlePlaying) stopAllAudio();
+  else startTitleAudio();
+});
+
+['titleWaveA', 'titleWaveB'].forEach(group => {
+  document.querySelectorAll('#' + group + ' .wave-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#' + group + ' .wave-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      if (group === 'titleWaveA') titleWaveA = this.dataset.twave;
+      else titleWaveB = this.dataset.twave;
+      updateTitleAudio();
+      if (!titlePlaying) drawTitleSynth();
+    });
+  });
+});
+
+document.getElementById('titleDetune').addEventListener('input', function() {
+  titleDetuneCents = parseInt(this.value);
+  document.getElementById('titleDetuneVal').textContent = titleDetuneCents + ' ct';
+  updateTitleAudio();
+  if (!titlePlaying) drawTitleSynth();
+});
+
+document.getElementById('titleMix').addEventListener('input', function() {
+  titleMix = parseInt(this.value);
+  document.getElementById('titleMixVal').textContent = (100 - titleMix) + ' · ' + titleMix;
+  updateTitleAudio();
+  if (!titlePlaying) drawTitleSynth();
+});
+
+document.getElementById('titleCutoff').addEventListener('input', function() {
+  titleCutoffPos = parseInt(this.value);
+  const f = titleCutoffHz();
+  document.getElementById('titleCutoffVal').textContent =
+    f >= 1000 ? (f / 1000).toFixed(1) + ' kHz' : Math.round(f) + ' Hz';
+  updateTitleAudio();
+  if (!titlePlaying) drawTitleSynth();
+});
+
+document.getElementById('titleRes').addEventListener('input', function() {
+  titleResVal = parseFloat(this.value);
+  document.getElementById('titleResVal').textContent = titleResVal.toFixed(1);
+  updateTitleAudio();
+  if (!titlePlaying) drawTitleSynth();
+});
+
 // =============================================
-// SLIDE 4: CV = Audio
+// SLIDE 3: CV = AUDIO
 // =============================================
 function drawCVAudio() {
   const r = initCanvas('cvAudioCanvas', 800, 400);
@@ -1336,7 +1689,7 @@ function drawCVAudio() {
   ctx.fillStyle = 'rgba(0, 102, 204, 0.06)';
   ctx.fill();
 
-  // --- CONTROL SIGNAL (orange) -2 Hz triangle LFO ---
+  // --- CONTROL SIGNAL (orange) - 2 Hz triangle LFO ---
   const lfoCycles = 2;
   const lfoAmp = pH * 0.42;
   ctx.beginPath();
@@ -1361,11 +1714,11 @@ function drawCVAudio() {
   ctx.strokeStyle = '#cc4400'; ctx.lineWidth = 2;
   ctx.beginPath(); ctx.moveTo(lx, ly2); ctx.lineTo(lx + 12, ly2); ctx.stroke();
   ctx.fillStyle = '#cc4400';
-  ctx.fillText('Control -2 Hz LFO', lx + 18, ly2 + 4);
+  ctx.fillText('Control - 2 Hz LFO', lx + 18, ly2 + 4);
 }
 
 // =============================================
-// SLIDE 3: VOLTAGE BASICS
+// SLIDE 2: VOLTAGE BASICS
 // =============================================
 function drawVoltage() {
   const r = initCanvas('voltageCanvas', 560, 400);
@@ -1497,12 +1850,55 @@ function drawVoltage() {
 }
 
 // =============================================
-// SLIDE 6: OVERTONES
+// SLIDE 5: OVERTONES
 // =============================================
 let overtoneAudioNode = null;
 let overtoneFilter = 'all'; // 'all', 'odd', 'even'
 let overtoneFundFreq = 220;
 let overtoneFundNote = 'A3';
+let overtoneHoverK = null;       // harmonic under the pointer, 1-indexed
+let overtoneSpecLayout = null;   // bar geometry, published by the draw pass
+let overtoneRolloff = 1;         // exponent p in 1/k^p
+let overtoneInvert = false;      // flip the waveform vertically
+
+// Amplitude of harmonic k. p = 1 is the natural 1/n rolloff of a saw or
+// square; p = 2 is the much faster 1/n² of a triangle.
+function overtoneAmp(k) { return Math.pow(k, -overtoneRolloff); }
+
+// Phase of harmonic k, in radians. Steepening the rolloff is integration, and
+// each integration rotates every harmonic by a further quarter cycle. Carrying
+// that rotation is what makes odd harmonics at 1/n² an actual triangle: a
+// plain sine sum with those amplitudes is a spiky lookalike, not a triangle.
+// At p = 1 the rotation is zero, so saw and square are untouched.
+function overtonePhase(k) {
+  const p = (overtoneRolloff - 1) * (k - 1) * Math.PI / 2;
+  // Inverting is a half cycle on every harmonic at once. It turns a falling
+  // saw into a rising ramp, and leaves the spectrum untouched, which is the
+  // point: the bars do not move and neither does the sound.
+  return overtoneInvert ? p + Math.PI : p;
+}
+
+// Name the classic waveform when the recipe lands exactly on one
+function overtoneShapeName() {
+  const p = overtoneRolloff;
+  if (overtoneFilter === 'all' && Math.abs(p - 1) < 0.05) return overtoneInvert ? 'ramp' : 'sawtooth';
+  if (overtoneFilter === 'odd' && Math.abs(p - 1) < 0.05) return 'square';
+  if (overtoneFilter === 'odd' && Math.abs(p - 2) < 0.05) return 'triangle';
+  return null;
+}
+
+// "1/9 amplitude · " when the rolloff makes a tidy fraction, otherwise nothing
+function ampFrac(k) {
+  if (!Number.isInteger(overtoneRolloff)) return '';
+  const denom = Math.round(Math.pow(k, overtoneRolloff));
+  return denom === 1 ? '' : `1/${denom} amplitude · `;
+}
+
+function overtoneRolloffLabel() {
+  const p = overtoneRolloff;
+  if (Math.abs(p - 1) < 0.05) return '1/n';
+  return '1/n^' + (Math.round(p * 10) / 10);
+}
 
 const OVERTONE_NOTES = {
   55: 'A1', 110: 'A2', 220: 'A3', 440: 'A4', 131: 'C3', 165: 'E3'
@@ -1512,7 +1908,6 @@ function shouldIncludeOvertone(k, filter) {
   if (k === 1) return true; // always preserve fundamental
   if (filter === 'all') return true;
   if (filter === 'odd') return k % 2 === 1;
-  if (filter === 'even') return k % 2 === 0;
   return true;
 }
 
@@ -1539,7 +1934,7 @@ function drawOvertones() {
     ctx.beginPath();
     for (let i = 0; i <= pW; i++) {
       const t = (i / pW) * cycles;
-      const y = midY - (1 / k) * Math.sin(2 * Math.PI * k * t) * scale;
+      const y = midY - overtoneAmp(k) * Math.sin(2 * Math.PI * k * t + overtonePhase(k)) * scale;
       i === 0 ? ctx.moveTo(mL + i, y) : ctx.lineTo(mL + i, y);
     }
     ctx.strokeStyle = 'rgba(0,102,204,0.18)';
@@ -1553,7 +1948,7 @@ function drawOvertones() {
     const t = (i / pW) * cycles;
     let v = 0;
     for (let k = 1; k <= n + 1; k++) {
-      if (shouldIncludeOvertone(k, overtoneFilter)) v += (1 / k) * Math.sin(2 * Math.PI * k * t);
+      if (shouldIncludeOvertone(k, overtoneFilter)) v += overtoneAmp(k) * Math.sin(2 * Math.PI * k * t + overtonePhase(k));
     }
     const y = midY - v * scale;
     i === 0 ? ctx.moveTo(mL + i, y) : ctx.lineTo(mL + i, y);
@@ -1589,29 +1984,46 @@ function drawOvertoneSpectrum(n) {
 
   const gap = 2;
   const barW = (pW - gap * (maxBars + 1)) / maxBars;
+  // Height of a full-amplitude bar, i.e. the fundamental. Everything vertical
+  // is derived from this so the hover column cannot end up taller than the
+  // tallest bar it is highlighting.
+  const maxBarH = pH - 4;
+  const topY = mT + pH - maxBarH;
+
+  // Published for the hover hit-test, so the pointer maths cannot drift
+  // out of step with the drawing maths.
+  overtoneSpecLayout = { mL, mT, pW, pH, barW, gap, maxBars };
 
   for (let k = 1; k <= maxBars; k++) {
     const x = mL + gap + (k - 1) * (barW + gap);
     const included = k <= n + 1 && shouldIncludeOvertone(k, overtoneFilter);
-    const amp = included ? 1 / k : 0;
+    const amp = included ? overtoneAmp(k) : 0;
+    const hovered = k === overtoneHoverK;
+
+    // Column highlight behind the bar, so short high harmonics stay findable.
+    // Capped at the fundamental's height rather than the full plot height.
+    if (hovered) {
+      ctx.fillStyle = 'rgba(0,102,204,0.07)';
+      ctx.fillRect(x - gap / 2, topY, barW + gap, maxBarH);
+    }
 
     // Draw ghost bar for context (shows where harmonic would be)
     if (k <= n + 1 && !included) {
-      const ghostH = (1 / k) * (pH - 4);
+      const ghostH = overtoneAmp(k) * maxBarH;
       ctx.fillStyle = 'rgba(0,102,204,0.06)';
       ctx.fillRect(x, mT + pH - ghostH, barW, ghostH);
     }
 
     if (amp > 0) {
-      const barH = amp * (pH - 4);
+      const barH = amp * maxBarH;
       const y = mT + pH - barH;
       const grad = ctx.createLinearGradient(x, y, x, mT + pH);
       grad.addColorStop(0, '#0066cc');
       grad.addColorStop(1, 'rgba(0,102,204,0.08)');
       ctx.fillStyle = grad;
       ctx.fillRect(x, y, barW, barH);
-      ctx.fillStyle = '#0066cc';
-      ctx.fillRect(x, y, barW, 1.5);
+      ctx.fillStyle = hovered ? '#cc4400' : '#0066cc';
+      ctx.fillRect(x, y, barW, hovered ? 2.5 : 1.5);
     }
 
     // Harmonic number and frequency labels (thin out for legibility)
@@ -1641,16 +2053,62 @@ function drawOvertoneSpectrum(n) {
   ctx.textAlign = 'center';
   ctx.fillText('Harmonic', mL + pW / 2, h - 4);
 
+  // --- Hover readout ---
+  if (overtoneHoverK && overtoneHoverK <= n + 1) {
+    const k = overtoneHoverK;
+    const included = shouldIncludeOvertone(k, overtoneFilter);
+    const freq = overtoneFundFreq * k;
+    const freqStr = freq >= 1000 ? (freq / 1000).toFixed(2) + ' kHz' : Math.round(freq) + ' Hz';
+    // Harmonic n is overtone n-1, which is the off-by-one everyone trips on
+    const lines = k === 1
+      ? ['Fundamental (1st harmonic)', freqStr, 'Full amplitude - the reference']
+      : [
+          `Harmonic ${k} (overtone ${k - 1})`,
+          `${freqStr} · ${k}x the fundamental`,
+          included ? `${ampFrac(k)}${(overtoneAmp(k) * 100).toFixed(1)}% of fundamental`
+                   : `Removed · ${overtoneFilter} harmonics only`
+        ];
+
+    ctx.font = '600 11px Source Code Pro, monospace';
+    const padX = 8, padY = 6, lh = 15;
+    let tw = 0;
+    lines.forEach(t => { tw = Math.max(tw, ctx.measureText(t).width); });
+    const boxW = tw + padX * 2, boxH = lines.length * lh + padY * 2;
+    // Park the box on whichever side the pointer is not, so it never covers
+    // the bar being inspected. The full-height column highlight is what ties
+    // the readout to its bar, so the box does not need to sit next to it.
+    const cx = mL + gap + (k - 1) * (barW + gap) + barW / 2;
+    const bx = cx < mL + pW / 2 ? mL + pW - boxW - 4 : mL + 4;
+    const by = mT + 2;
+
+    ctx.fillStyle = '#ffffff';
+    ctx.strokeStyle = '#bbb';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.roundRect(bx, by, boxW, boxH, 4); ctx.fill(); ctx.stroke();
+
+    ctx.textAlign = 'left';
+    lines.forEach((t, i) => {
+      ctx.fillStyle = i === 0 ? '#1a1a1a' : (included || k === 1 ? '#555' : '#cc4400');
+      ctx.fillText(t, bx + padX, by + padY + lh * i + 11);
+    });
+  }
+
   // Update description
   const desc = document.getElementById('overtoneDesc');
+  const shape = overtoneShapeName();
+  const count = `Fundamental + ${n} overtone${n > 1 ? 's' : ''}`;
   if (n === 0) {
     desc.textContent = 'The fundamental - a single frequency. The note you hear as "the pitch."';
-  } else if (overtoneFilter === 'odd') {
-    desc.textContent = `Fundamental + ${n} overtone${n > 1 ? 's' : ''} (odd only). This recipe builds toward a square/triangle shape.`;
-  } else if (overtoneFilter === 'even') {
-    desc.textContent = `Fundamental + ${n} overtone${n > 1 ? 's' : ''} (even only). Even harmonics create octave-like relationships.`;
+  } else if (shape) {
+    desc.textContent = `${count}, falling off as ${overtoneRolloffLabel()}. That recipe is a ${shape}.`;
+  } else if (overtoneRolloff > 1.6) {
+    desc.textContent = `${count}, falling off as ${overtoneRolloffLabel()}. The highs are almost gone, so the tone goes soft and rounded.`;
   } else {
-    desc.textContent = `Fundamental + ${n} overtone${n > 1 ? 's' : ''} - all harmonics present. This recipe builds toward a sawtooth.`;
+    desc.textContent = `${count}, falling off as ${overtoneRolloffLabel()}.`;
+  }
+  // The whole point of the invert button: the shape flips, the recipe does not.
+  if (overtoneInvert && n > 0) {
+    desc.textContent += ' Inverted - the bars have not moved, and neither has the sound.';
   }
 }
 
@@ -1658,7 +2116,7 @@ function getFilteredOvertoneAmps() {
   const n = parseInt(document.getElementById('overtoneSlider').value);
   const amps = [];
   for (let k = 1; k <= n + 1; k++) {
-    amps.push(shouldIncludeOvertone(k, overtoneFilter) ? 1 / k : 0);
+    amps.push(shouldIncludeOvertone(k, overtoneFilter) ? overtoneAmp(k) : 0);
   }
   while (amps.length < 2) amps.push(0);
   return amps;
@@ -1672,7 +2130,7 @@ function overtoneNormAndWave(amps) {
     const t = (s / steps) * Math.PI * 2;
     let v = 0;
     for (let i = 0; i < amps.length; i++) {
-      v += amps[i] * Math.sin((i + 1) * t);
+      v += amps[i] * Math.sin((i + 1) * t + overtonePhase(i + 1));
     }
     peak = Math.max(peak, Math.abs(v));
   }
@@ -1680,17 +2138,112 @@ function overtoneNormAndWave(amps) {
   const ctx = getAudioCtx();
   const real = new Float32Array(amps.length + 1);
   const imag = new Float32Array(amps.length + 1);
-  for (let i = 0; i < amps.length; i++) { real[i + 1] = 0; imag[i + 1] = amps[i] * norm; }
+  // real is the cosine term, imag the sine term, so a phase rotation splits
+  // each harmonic across the two.
+  for (let i = 0; i < amps.length; i++) {
+    const ph = overtonePhase(i + 1);
+    real[i + 1] = amps[i] * norm * Math.sin(ph);
+    imag[i + 1] = amps[i] * norm * Math.cos(ph);
+  }
   return ctx.createPeriodicWave(real, imag, { disableNormalization: true });
 }
 
+const OVERTONE_XFADE = 0.012;  // seconds
+
+// Two oscillators running in parallel, started together so they stay phase
+// aligned. A timbre change is written to whichever voice is currently silent
+// and then crossfaded in, so the new sound starts immediately and the wavetable
+// swap always lands on a voice at zero gain, where a discontinuity is inaudible.
+//
+// The earlier fix ducked a single oscillator and swapped in the gap. That
+// killed the click too, but it delayed the response by the length of the duck,
+// which is worse than the click it was hiding.
+function startOvertoneAudio() {
+  const ctx = getAudioCtx();
+  const master = ctx.createGain();
+  master.gain.value = 0.18;
+  master.connect(ctx.destination);
+
+  const wave = overtoneNormAndWave(getFilteredOvertoneAmps());
+  const voices = [0, 1].map(i => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.value = overtoneFundFreq;
+    osc.setPeriodicWave(wave);
+    gain.gain.value = i === 0 ? 1 : 0;
+    osc.connect(gain);
+    gain.connect(master);
+    osc.start();
+    activeNodes.push(osc);
+    return { osc, gain };
+  });
+  activeGains.push(master);
+  return { voices, master, live: 0 };
+}
+
 function updateOvertoneAudio() {
-  if (!overtoneAudioNode) return;
-  // Swap directly - setPeriodicWave is phase-continuous
-  overtoneAudioNode.osc.setPeriodicWave(overtoneNormAndWave(getFilteredOvertoneAmps()));
+  const node = overtoneAudioNode;
+  if (!node) return;
+  const ctx = getAudioCtx();
+  const now = ctx.currentTime;
+  const next = 1 - node.live;
+
+  node.voices[next].osc.setPeriodicWave(overtoneNormAndWave(getFilteredOvertoneAmps()));
+
+  [[node.voices[node.live].gain.gain, 0], [node.voices[next].gain.gain, 1]].forEach(([g, target]) => {
+    g.cancelScheduledValues(now);
+    g.setValueAtTime(g.value, now);
+    g.linearRampToValueAtTime(target, now + OVERTONE_XFADE);
+  });
+  node.live = next;
 }
 
 document.getElementById('overtoneSlider').addEventListener('input', drawOvertones);
+
+document.getElementById('overtoneRolloff').addEventListener('input', function() {
+  overtoneRolloff = parseFloat(this.value);
+  document.getElementById('overtoneRolloffVal').textContent = overtoneRolloffLabel();
+  drawOvertones();
+});
+
+// --- Spectrum hover readout ---
+// Hit-tests by column across the full plot height rather than against the bar
+// itself: the 25th harmonic is a 1/25 sliver and would be impossible to hit.
+(function () {
+  const spec = document.getElementById('overtoneSpectrumCanvas');
+  if (!spec) return;
+
+  function harmonicAt(clientX, clientY) {
+    const L = overtoneSpecLayout;
+    if (!L) return null;
+    const rect = spec.getBoundingClientRect();
+    const x = clientX - rect.left, y = clientY - rect.top;
+    if (y < L.mT || y > L.mT + L.pH + 26) return null;
+    for (let k = 1; k <= L.maxBars; k++) {
+      const bx = L.mL + L.gap + (k - 1) * (L.barW + L.gap);
+      if (x >= bx - L.gap / 2 && x <= bx + L.barW + L.gap / 2) return k;
+    }
+    return null;
+  }
+
+  spec.addEventListener('mousemove', (e) => {
+    const n = parseInt(document.getElementById('overtoneSlider').value);
+    let k = harmonicAt(e.clientX, e.clientY);
+    if (k !== null && k > n + 1) k = null;  // nothing drawn there yet
+    spec.style.cursor = k ? 'crosshair' : 'default';
+    if (k !== overtoneHoverK) {
+      overtoneHoverK = k;
+      drawOvertoneSpectrum(n);
+    }
+  });
+
+  spec.addEventListener('mouseleave', () => {
+    if (overtoneHoverK !== null) {
+      overtoneHoverK = null;
+      drawOvertoneSpectrum(parseInt(document.getElementById('overtoneSlider').value));
+    }
+  });
+})();
 
 // Overtone harmonic filter
 document.getElementById('overtoneFilter').addEventListener('click', (e) => {
@@ -1703,6 +2256,29 @@ document.getElementById('overtoneFilter').addEventListener('click', (e) => {
   if (overtoneAudioNode) updateOvertoneAudio();
 });
 
+// Invert: same recipe, flipped. Saw becomes ramp, spectrum and sound unchanged.
+document.getElementById('overtoneInvertBtn').addEventListener('click', function() {
+  overtoneInvert = !overtoneInvert;
+  this.classList.toggle('active', overtoneInvert);
+  drawOvertones();
+  if (overtoneAudioNode) updateOvertoneAudio();
+});
+
+function psSyncSeqModeBtns() {
+  document.querySelectorAll('#psSeqModeBtns .wave-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.seqmode === seqMode);
+  });
+}
+
+document.getElementById('psSeqModeBtns').addEventListener('click', (e) => {
+  const btn = e.target.closest('.wave-btn');
+  if (!btn) return;
+  seqMode = btn.dataset.seqmode;
+  seqSteps = (seqMode === 'melody') ? seqMelody.slice() : SEQ_PATTERNS[seqMode].slice();
+  psSyncSeqModeBtns();
+  drawPSSeq();
+});
+
 // Fundamental pitch selector
 document.getElementById('overtoneFundBtns').addEventListener('click', (e) => {
   const btn = e.target.closest('.wave-btn');
@@ -1713,7 +2289,7 @@ document.getElementById('overtoneFundBtns').addEventListener('click', (e) => {
   overtoneFundNote = OVERTONE_NOTES[overtoneFundFreq] || '';
   drawOvertones();
   if (overtoneAudioNode) {
-    overtoneAudioNode.osc.frequency.value = overtoneFundFreq;
+    overtoneAudioNode.voices.forEach(v => { v.osc.frequency.value = overtoneFundFreq; });
   }
 });
 
@@ -1724,27 +2300,26 @@ document.getElementById('overtoneAudioBtn').addEventListener('click', function()
     return;
   }
   stopAllAudio();
-  const amps = getFilteredOvertoneAmps();
-  overtoneAudioNode = playCustomWave(amps, overtoneFundFreq);
+  overtoneAudioNode = startOvertoneAudio();
   this.classList.add('playing');
   this.dataset.origText = '▶ Listen';
   this.textContent = '■ Stop';
 });
 
 // =============================================
-// SLIDE 5: WAVEFORMS
+// SLIDE 4: WAVEFORMS
 // =============================================
 
 // Base harmonic definitions for each waveform: amplitude for harmonic n (1-indexed)
 const WAVE_HARMONICS = {
   sine:     { amp: (n) => n === 1 ? 1 : 0, color: '#0066cc', rgb: '0,102,204',
-    desc: 'A single frequency. No overtones. The purest possible tone - the building block of all other waveforms.' },
+    desc: 'A single frequency, no overtones. Every other waveform is built from these.' },
   sawtooth: { amp: (n) => 1 / n, color: '#2e7d32', rgb: '46,125,50',
-    desc: 'All harmonics present, falling off as 1/n. The richest basic waveform - bright and buzzy. The classic starting point for subtractive synthesis.' },
+    desc: 'All harmonics, falling off as 1/n. Bright and buzzy, and the usual starting point for subtractive.' },
   square:   { amp: (n) => n % 2 === 1 ? 1 / n : 0, color: '#cc4400', rgb: '204,68,0',
     desc: 'Odd harmonics only (1, 3, 5, 7…), falling off as 1/n. Sounds hollow and woody - think clarinets and chiptunes.' },
   triangle: { amp: (n) => n % 2 === 1 ? (Math.pow(-1, (n - 1) / 2)) / (n * n) : 0, color: '#7b1fa2', rgb: '123,31,162',
-    desc: 'Odd harmonics only, falling off as 1/n². Much softer than square - close to a sine but with subtle warmth.' }
+    desc: 'Odd harmonics only, falling off as 1/n². The third is already a ninth of the fundamental, so it sits close to a sine with just enough edge to hear.' }
 };
 
 const FILTER_DESCS = {
@@ -1901,7 +2476,7 @@ document.getElementById('waveAudioBtn').addEventListener('click', function() {
 
 
 // =============================================
-// SLIDE 7: THE FILTER
+// SLIDE 6: THE FILTER
 // =============================================
 let filterAudioNodes = null;
 let filterType = 'lowpass';
@@ -2214,7 +2789,7 @@ document.getElementById('filterAudioBtn').addEventListener('click', function() {
 });
 
 // =============================================
-// SLIDE 8: PITCH & FREQUENCY
+// SLIDE 7: PITCH & FREQUENCY
 // =============================================
 const NOTE_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 let currentPitchFreq = 440;
@@ -2512,7 +3087,7 @@ document.getElementById('pitchAudioBtn').addEventListener('click', function() {
 });
 
 // =============================================
-// SLIDE 9: NOISE
+// SLIDE 8: NOISE
 // =============================================
 let noiseAudioNodes = null;
 let noiseType = 'white';
@@ -2653,7 +3228,7 @@ document.getElementById('noiseTypeBtns').addEventListener('click', (e) => {
   btn.classList.add('active');
   noiseType = btn.dataset.ntype;
   drawNoise();
-  const descs = { white: 'White noise: equal energy at every frequency - pure randomness.',
+  const descs = { white: 'White noise: equal energy at every frequency.',
     pink: 'Pink noise: energy falls 3dB per octave - natural, like rain or wind.',
     brown: 'Brown noise: energy falls 6dB per octave - deep, rumbling, oceanic.' };
   document.getElementById('noiseDesc').textContent = descs[noiseType];
@@ -2691,7 +3266,7 @@ document.getElementById('noiseAudioBtn').addEventListener('click', function() {
 });
 
 // =============================================
-// SLIDE 10: 1V/OCT
+// SLIDE 9: 1V/OCT
 // =============================================
 function midiToNote(m) { return NOTE_NAMES[((m % 12) + 12) % 12] + Math.floor(m / 12 - 1); }
 function midiToFreq(m) { return 440 * Math.pow(2, (m - 69) / 12); }
@@ -2804,13 +3379,24 @@ function drawVPerOct() {
 document.getElementById('voctBase').addEventListener('input', drawVPerOct);
 
 // =============================================
-// SLIDE 11: CONTROLLING PITCH (interactive)
+// SLIDE 10: CONTROLLING PITCH (interactive)
 // =============================================
-let seqSteps = [3, 5, 7, 3, 6, 4, 1, 2]; // grid row indices (0=top/high, 7=bottom/low)
+// Grid row indices, 0 = top/high, 7 = bottom/low. The rows are a C major
+// octave, so a pattern is just a list of degrees.
+const SEQ_PATTERNS = {
+  scale: [7, 6, 5, 4, 3, 2, 1, 0],   // straight up the octave
+  arp:   [7, 5, 3, 0, 7, 5, 3, 0]    // C major triad, twice
+};
+let seqMelody = [3, 5, 7, 3, 6, 4, 1, 2];  // whatever the room last edited
+let seqMode = 'melody';
+let seqSteps = seqMelody.slice();
 let seqPlaying = false;
-let seqCurrentStep = -1;
+let seqCurrentStep = -1;   // step being scheduled
+let seqDisplayStep = -1;   // step currently audible, which is what gets drawn
 let seqAudioNode = null;
 let shValues = [];
+let shQuantize = false;
+const PS_SH_LOW = 60; // C4, bottom of the sample and hold range
 let psKeyHistory = []; // recent keyboard notes for CV trace
 
 const PS_ROWS = 8; // grid rows for sequencer
@@ -2822,6 +3408,54 @@ function psRowToMidi(row) {
   // Map to a C major-ish scale across one octave
   const scale = [72, 71, 69, 67, 65, 64, 62, 60]; // C5 down to C4
   return scale[Math.min(row, scale.length - 1)];
+}
+
+// How long after we schedule a note the listener actually hears it. Bluetooth
+// output sits 150-300ms behind, and at a 250ms clock that is a whole step, so an
+// honestly-synced playhead still looks like it is running ahead of the sound.
+// Only compensate by what the browser actually reports: guessing a figure would
+// throw wired setups out instead. Safari does not expose outputLatency, so there
+// it degrades to no compensation.
+function psOutputLatencyMs() {
+  const a = audioCtx;
+  if (!a) return 0;
+  const base = a.baseLatency || 0;
+  const out = typeof a.outputLatency === 'number' ? a.outputLatency : 0;
+  return Math.min((base + out) * 1000, 400);
+}
+
+// Run a visual update at the moment the note it belongs to becomes audible
+function psAfterOutputLatency(fn) {
+  const d = psOutputLatencyMs();
+  if (d < 8) fn(); else setTimeout(fn, d);
+}
+
+const PS_C_MAJOR = [0, 2, 4, 5, 7, 9, 11, 12]; // 12 lets a high value round up to the next C
+
+// Snap a pitch to the nearest C major degree. The voltage stays random; the
+// quantizer only decides which note that voltage is allowed to land on, which
+// is exactly what a quantizer module does in a rack.
+function psQuantizeCMajor(midi) {
+  const oct = Math.floor(midi / 12) * 12;
+  const semi = midi - oct;
+  let best = PS_C_MAJOR[0], bestD = Infinity;
+  for (const s of PS_C_MAJOR) {
+    const d = Math.abs(semi - s);
+    if (d < bestD) { bestD = d; best = s; }
+  }
+  return oct + best;
+}
+
+// One sample-and-hold step, shared by the manual clock button and auto mode
+function psSHStep() {
+  const v = Math.random();
+  let midi = PS_SH_LOW + v * 12;
+  if (shQuantize) midi = psQuantizeCMajor(midi);
+  // Keep both: the voltage as sampled, and the note it was allowed to become.
+  // The gap between them is what the quantizer actually did.
+  shValues.push({ raw: v, out: (midi - PS_SH_LOW) / 12 });
+  psPlayNote(psMidiToFreq(midi));
+  psAfterOutputLatency(drawPSSH);
 }
 
 function psMidiToFreq(midi) {
@@ -2841,6 +3475,17 @@ function psPlayNote(freq) {
   osc.connect(gain); gain.connect(actx.destination);
   osc.start(); osc.stop(ct + 0.3);
   activeNodes.push(osc); activeGains.push(gain);
+
+  // Release the voice when it finishes. Without this every note fired by the
+  // sequencer or sample and hold stayed connected to the destination and on the
+  // tracking lists for the life of the slide - four a second, forever - which
+  // is what made playback degrade the longer it ran.
+  osc.onended = () => {
+    try { osc.disconnect(); } catch (e) {}
+    try { gain.disconnect(); } catch (e) {}
+    activeNodes = activeNodes.filter(n => n !== osc);
+    activeGains = activeGains.filter(g => g !== gain);
+  };
 }
 
 // --- Keyboard CV trace canvas ---
@@ -2955,9 +3600,9 @@ function drawPSSeq() {
   }
 
   // Active step highlight
-  if (seqPlaying && seqCurrentStep >= 0) {
+  if (seqPlaying && seqDisplayStep >= 0) {
     ctx.fillStyle = 'rgba(0, 102, 204, 0.06)';
-    ctx.fillRect(seqCurrentStep * cellW, 0, cellW, h);
+    ctx.fillRect(seqDisplayStep * cellW, 0, cellW, h);
   }
 
   // Dots
@@ -2965,7 +3610,7 @@ function drawPSSeq() {
     const row = seqSteps[c];
     const cx = c * cellW + cellW / 2;
     const cy = row * cellH + cellH / 2;
-    const isCurrentStep = seqPlaying && seqCurrentStep === c;
+    const isCurrentStep = seqPlaying && seqDisplayStep === c;
     ctx.beginPath();
     ctx.arc(cx, cy, Math.min(cellW, cellH) * 0.3, 0, Math.PI * 2);
     ctx.fillStyle = isCurrentStep ? '#cc4400' : '#0066cc';
@@ -2986,36 +3631,78 @@ function drawPSSH() {
   if (!r) return;
   const { ctx, w, h } = r;
 
+  const mL = 26, mT = 18, mB = 8, inset = 5;
+  const pW = w - mL, pH = h - mT - mB;
+  const yFor = v => mT + pH - inset - v * (pH - inset * 2);
+
   ctx.font = '700 9px Source Code Pro, monospace';
   ctx.fillStyle = '#0066cc'; ctx.textAlign = 'left';
-  ctx.fillText('RANDOM CV', 4, 12);
+  ctx.fillText(shQuantize ? 'RANDOM CV - C MAJOR' : 'RANDOM CV', mL + 2, 12);
 
   ctx.strokeStyle = '#bbb'; ctx.lineWidth = 1;
-  ctx.strokeRect(0, 0, w, h);
+  ctx.strokeRect(mL, mT, pW, pH);
+
+  // The 12 semitones from C4 to C5. The C major degrees are the only values a
+  // quantized sample is allowed to take; the rest are drawn faint to show what
+  // it is being kept away from.
+  const SEMI_NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B','C'];
+  for (let i = 0; i <= 12; i++) {
+    const y = yFor(i / 12);
+    const inScale = PS_C_MAJOR.includes(i);
+    ctx.strokeStyle = shQuantize ? (inScale ? '#b9d4f0' : '#f3f3f3') : '#f0f0f0';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(mL, y); ctx.lineTo(mL + pW, y); ctx.stroke();
+    if (inScale) {
+      ctx.font = '8px Source Code Pro, monospace';
+      ctx.fillStyle = shQuantize ? '#0066cc' : '#ccc';
+      ctx.textAlign = 'right';
+      ctx.fillText(SEMI_NAMES[i] + (i === 12 ? '5' : '4'), mL - 4, y + 3);
+    }
+  }
 
   if (shValues.length > 0) {
     const maxSteps = 16;
     const visible = shValues.slice(-maxSteps);
-    const stepW = w / maxSteps;
+    const stepW = pW / maxSteps;
+
+    // Where each sample was taken, and how far it had to move to land on a note
+    if (shQuantize) {
+      visible.forEach((sv, i) => {
+        if (Math.abs(sv.raw - sv.out) < 0.002) return;
+        const cx = mL + i * stepW + stepW / 2;
+        ctx.strokeStyle = '#999'; ctx.lineWidth = 1;
+        ctx.setLineDash([2, 2]);
+        ctx.beginPath(); ctx.moveTo(cx, yFor(sv.raw)); ctx.lineTo(cx, yFor(sv.out)); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.beginPath(); ctx.arc(cx, yFor(sv.raw), 2.5, 0, Math.PI * 2);
+        ctx.strokeStyle = '#999'; ctx.stroke();
+      });
+    }
+
+    // The held staircase, at the value actually sent to the oscillator
     ctx.strokeStyle = '#0066cc'; ctx.lineWidth = 2;
     ctx.beginPath();
-    visible.forEach((v, i) => {
-      const y = h - v * (h - 16) - 8;
-      const x1 = i * stepW;
-      const x2 = (i + 1) * stepW;
+    visible.forEach((sv, i) => {
+      const y = yFor(sv.out);
+      const x1 = mL + i * stepW, x2 = mL + (i + 1) * stepW;
       if (i === 0) ctx.moveTo(x1, y); else ctx.lineTo(x1, y);
       ctx.lineTo(x2, y);
     });
     ctx.stroke();
 
-    // Highlight latest
-    if (visible.length > 0) {
-      const lastIdx = visible.length - 1;
-      const lx = lastIdx * stepW + stepW / 2;
-      const ly = h - visible[lastIdx] * (h - 16) - 8;
-      ctx.beginPath(); ctx.arc(lx, ly, 4, 0, Math.PI * 2);
-      ctx.fillStyle = '#cc4400'; ctx.fill();
-    }
+    const last = visible.length - 1;
+    ctx.beginPath();
+    ctx.arc(mL + last * stepW + stepW / 2, yFor(visible[last].out), 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#cc4400'; ctx.fill();
+  }
+
+  if (shQuantize) {
+    ctx.font = '8px Source Code Pro, monospace';
+    ctx.fillStyle = '#999'; ctx.textAlign = 'right';
+    ctx.fillText('sampled', w - 4, 12);
+    const lx = w - 4 - ctx.measureText('sampled').width - 7;
+    ctx.strokeStyle = '#999'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(lx, 9, 2.5, 0, Math.PI * 2); ctx.stroke();
   }
 }
 
@@ -3075,6 +3762,11 @@ document.getElementById('psSeqCanvas').addEventListener('click', function(e) {
   const row = Math.floor(y / this._cellH);
   if (col >= 0 && col < this._cols && row >= 0 && row < this._rows) {
     seqSteps[col] = row;
+    // Editing a preset turns it into your melody, rather than silently leaving
+    // the mode reading "Scale" while the pattern is no longer a scale.
+    seqMode = 'melody';
+    seqMelody = seqSteps.slice();
+    psSyncSeqModeBtns();
     if (!seqPlaying) psPlayNote(psMidiToFreq(psRowToMidi(row)));
     drawPSSeq();
   }
@@ -3087,19 +3779,20 @@ let shAutoPlaying = false;
 function psClockTick() {
   // Advance sequencer if playing
   if (seqPlaying) {
-    const midi = psRowToMidi(seqSteps[seqCurrentStep]);
-    psPlayNote(psMidiToFreq(midi));
+    // Advance, then play, then draw. The playhead rests at -1 when stopped,
+    // which is the position before step 1, so the first clock lands on step 1
+    // and the highlighted step is always the one you can hear.
     seqCurrentStep = (seqCurrentStep + 1) % 8;
-    drawPSSeq();
+    const step = seqCurrentStep;
+    psPlayNote(psMidiToFreq(psRowToMidi(seqSteps[step])));
+    psAfterOutputLatency(() => {
+      if (!seqPlaying) return;
+      seqDisplayStep = step;
+      drawPSSeq();
+    });
   }
   // Advance S&H if auto is on
-  if (shAutoPlaying) {
-    const v = Math.random();
-    shValues.push(v);
-    const midi = 60 + v * 12; // unquantized - true S&H behavior
-    psPlayNote(psMidiToFreq(midi));
-    drawPSSH();
-  }
+  if (shAutoPlaying) psSHStep();
 }
 
 function psClockSync() {
@@ -3115,6 +3808,7 @@ document.getElementById('psSeqPlayBtn').addEventListener('click', function() {
   if (seqPlaying) {
     seqPlaying = false;
     seqCurrentStep = -1;
+    seqDisplayStep = -1;
     this.classList.remove('playing');
     this.textContent = '\u25B6 Play';
     drawPSSeq();
@@ -3122,7 +3816,8 @@ document.getElementById('psSeqPlayBtn').addEventListener('click', function() {
     return;
   }
   seqPlaying = true;
-  seqCurrentStep = 0;
+  seqCurrentStep = -1;  // before step 1; the first tick advances onto it
+  seqDisplayStep = -1;
   this.classList.add('playing');
   this.textContent = '\u25A0 Stop';
   psClockTick();
@@ -3132,10 +3827,12 @@ document.getElementById('psSeqPlayBtn').addEventListener('click', function() {
 // S&H clock button - single manual tick
 document.getElementById('psSHClockBtn').addEventListener('click', function() {
   if (shAutoPlaying) return; // ignore manual ticks while auto-playing
-  const v = Math.random();
-  shValues.push(v);
-  const midi = 60 + v * 12; // unquantized - true S&H behavior
-  psPlayNote(psMidiToFreq(midi));
+  psSHStep();
+});
+
+document.getElementById('psSHQuantBtn').addEventListener('click', function() {
+  shQuantize = !shQuantize;
+  this.classList.toggle('active', shQuantize);
   drawPSSH();
 });
 
@@ -3152,7 +3849,7 @@ document.getElementById('psSHAutoBtn').addEventListener('click', function() {
 });
 
 // =============================================
-// SLIDE 12: GATES & TRIGGERS
+// SLIDE 11: GATES & TRIGGERS
 // =============================================
 let gtGateHeld = false;
 let gtAudioNode = null;
@@ -3418,7 +4115,7 @@ function drawGateTrigger() {
 }
 
 // =============================================
-// SLIDE 13: ENVELOPES (interactive ADSR)
+// SLIDE 12: ENVELOPES (interactive ADSR)
 // =============================================
 let envGateActive = false;
 let envAudioNode = null;
@@ -3692,7 +4389,7 @@ function envAnimLoop() {
       envAnimFrame = null;
       drawEnvelopeShape();
       // Loop retrigger
-      if (envLooping && current === 13) {
+      if (envLooping && current === 12) {
         envLoopTimeout = setTimeout(() => envTriggerGate(), 200);
       }
       return;
@@ -3794,7 +4491,7 @@ function envReleaseGate() {
 }
 
 // =============================================
-// SLIDE 12: GATES & TRIGGERS - Event Listeners
+// SLIDE 11: GATES & TRIGGERS - Event Listeners
 // =============================================
 document.getElementById('gtGateBtn').addEventListener('mousedown', function(e) {
   e.preventDefault();
@@ -3821,7 +4518,7 @@ document.getElementById('gtGateBtn').addEventListener('touchend', function(e) {
 });
 
 // =============================================
-// SLIDE 13: ENVELOPES - Event Listeners
+// SLIDE 12: ENVELOPES - Event Listeners
 // =============================================
 ['envA','envD','envS','envR'].forEach(id => {
   document.getElementById(id).addEventListener('input', drawEnvelopeShape);
@@ -3874,19 +4571,19 @@ document.getElementById('envGateBtn').addEventListener('mouseup', function() {
 
 // Keyboard: Enter/Return triggers gate
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && current === 13 && !e.repeat) {
+  if (e.key === 'Enter' && current === 12 && !e.repeat) {
     e.preventDefault();
     envTriggerGate();
   }
 });
 document.addEventListener('keyup', function(e) {
-  if (e.key === 'Enter' && current === 13) {
+  if (e.key === 'Enter' && current === 12) {
     envReleaseGate();
   }
 });
 
 // =============================================
-// SLIDE 14: VCA
+// SLIDE 13: VCA
 // =============================================
 let vcaMode = 'manual'; // 'manual' or 'envelope'
 let vcaAudioNode = null;
@@ -4329,7 +5026,7 @@ document.getElementById('vcaAudioBtn').addEventListener('click', function(e) {
 });
 
 // =============================================
-// SLIDE 15: LFO
+// SLIDE 14: LFO
 // =============================================
 let lfoAudioNodes = null;
 let lfoShape = 'sine';
@@ -4516,7 +5213,7 @@ document.getElementById('lfoAudioBtn').addEventListener('click', function() {
 });
 
 // =============================================
-// SLIDE 16: ENVELOPE AS MODULATION
+// SLIDE 15: ENVELOPE AS MODULATION
 // =============================================
 let envModTarget = 'filter'; // 'filter', 'pitch', 'amp'
 let envModAudioNode = null;
@@ -4869,30 +5566,6 @@ function drawModuleLabel(ctx, x, y, s, label) {
   ctx.fillText(label, x + s / 2, y + s * 0.83);
 }
 
-// --- KEYBOARD icon ---
-function drawIconKeyboard(ctx, x, y, s) {
-  drawModuleBox(ctx, x, y, s, '#0066cc');
-  const inn = getInner(x, y, s);
-  const nWhite = 7, nBlack = 5;
-  const kw = inn.w / nWhite;
-  const kh = inn.b - inn.t;
-  // White keys
-  ctx.strokeStyle = '#151130'; ctx.lineWidth = 1;
-  for (let i = 0; i < nWhite; i++) {
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(inn.l + i * kw, inn.t, kw, kh);
-    ctx.strokeRect(inn.l + i * kw, inn.t, kw, kh);
-  }
-  // Black keys (pattern: 1,2, skip, 4,5,6 skip - like C maj)
-  const blackIdx = [1, 2, 4, 5, 6];
-  const bkw = kw * 0.65, bkh = kh * 0.6;
-  ctx.fillStyle = '#151130';
-  for (const i of blackIdx) {
-    if (i < nWhite) ctx.fillRect(inn.l + i * kw - bkw / 2, inn.t, bkw, bkh);
-  }
-  drawModuleDivider(ctx, x, y, s);
-  drawModuleLabel(ctx, x, y, s, 'KEYBOARD');
-}
 
 // --- VCO icon ---
 function drawIconVCO(ctx, x, y, s) {
@@ -4919,27 +5592,6 @@ function drawIconVCO(ctx, x, y, s) {
   drawModuleLabel(ctx, x, y, s, 'VCO');
 }
 
-// --- MIXER icon ---
-function drawIconMixer(ctx, x, y, s) {
-  drawModuleBox(ctx, x, y, s, '#999');
-  const inn = getInner(x, y, s);
-  const midY = (inn.t + inn.b) / 2;
-  ctx.strokeStyle = '#231f20'; ctx.lineWidth = 1.2; ctx.lineCap = 'round';
-  // 4 input lines converging from left to right point
-  const offsets = [-0.35, -0.12, 0.07, 0.28];
-  offsets.forEach(off => {
-    ctx.beginPath();
-    const startY = inn.l;
-    const sy = midY + off * (inn.b - inn.t);
-    ctx.moveTo(inn.l, sy);
-    // Curve to convergence point on right
-    ctx.bezierCurveTo(inn.l + inn.w * 0.5, sy, inn.l + inn.w * 0.6, midY, inn.r, midY);
-    ctx.stroke();
-  });
-  ctx.lineCap = 'butt';
-  drawModuleDivider(ctx, x, y, s);
-  drawModuleLabel(ctx, x, y, s, 'MIXER');
-}
 
 // --- LPF icon ---
 function drawIconLPF(ctx, x, y, s) {
@@ -5097,7 +5749,7 @@ function drawDashedArrowUp(ctx, x, y1, y2, color) {
 }
 
 // =============================================
-// SLIDE 17: SIGNAL PATH
+// SHARED: CONNECTOR HELPERS
 // =============================================
 // Smooth connector: horizontal line with arrowhead, round cap
 function drawSmoothArrow(ctx, x1, y1, x2, y2, color) {
@@ -5126,113 +5778,487 @@ function drawSmoothArrow(ctx, x1, y1, x2, y2, color) {
 }
 
 // =============================================
-// SLIDE 18: PARADIGM
+// SLIDE 17: BUILD THE VOICE
 // =============================================
-function drawParadigm() {
-  const r = initCanvas('paradigmCanvas', 1200, 400);
+// Seven steps, each adding one block to the signal path. The audio graph is
+// built once and reconfigured per step, so stepping forward and back is cheap.
+const BUILD_STEPS = [
+  {
+    title: 'Oscillator',
+    body: 'One oscillator straight to the output. Nothing is shaping it yet, so what you hear is the raw material.',
+    listen: 'Switch waveforms while it drones. Same pitch every time, completely different character.'
+  },
+  {
+    title: 'Add the filter',
+    body: 'The filter goes between the oscillator and the output, and takes harmonics away. Nothing else about the patch has changed.',
+    listen: 'The saw loses its edge. Same note, same waveform, less of it.'
+  },
+  {
+    title: 'Add a pitch source',
+    body: 'Anything that puts out one volt per octave can drive the oscillator: a keyboard, a sequencer, a random voltage. This is an eight step sequencer, sending a pitch voltage and a gate on every step.',
+    listen: 'The pitch moves, but the sound never stops. There are notes, and there is no articulation. Nothing is using that gate yet.'
+  },
+  {
+    title: 'Add an envelope',
+    body: 'An envelope generator takes the gate in and puts a contour out. It is firing on every step of the sequence now. Listen carefully.',
+    listen: 'Nothing changed. The envelope is running, but it drives nothing, so there is nothing to hear.'
+  },
+  {
+    title: 'Add the VCA',
+    body: 'The VCA multiplies the audio by the envelope. This is where the shape becomes something you can hear.',
+    listen: 'Notes start and stop. The drone of the last three steps has turned into a part.'
+  },
+  {
+    title: 'Add the LFO',
+    body: 'An oscillator too slow to hear, running into the filter through an attenuator. The attenuator matters more than the destination: it sets how much of the LFO arrives.',
+    listen: 'Low depth is a slow breath, high depth is a siren. The attenuator sets how much of the LFO arrives.'
+  },
+  {
+    title: 'Envelope to the filter',
+    body: 'A second source on the same cutoff the LFO is already moving. The LFO repeats forever. The envelope fires once per note.',
+    listen: 'Two sources on one filter, and you can pick them apart by ear. The bite at the front of each note comes from the envelope.'
+  }
+];
+
+// Which blocks exist at a given step index
+const BUILD_PARTS = {
+  vco:   0,
+  out:   0,
+  vcf:   1,
+  pitch: 2,
+  aeg:   3,
+  vca:   4,
+  lfo:   5,
+  att:   5,
+  feg:   6
+};
+
+let buildStep = 0;
+let buildWave = 'sawtooth';
+let buildLfoDepth = 35;           // percent
+const BUILD_LFO_MAX_HZ = 1200;    // cutoff swing at full depth
+function buildDepthHz() { return Math.round(buildLfoDepth / 100 * BUILD_LFO_MAX_HZ); }
+let buildPlaying = false;
+let buildNodes = null;
+let buildClock = null;
+let buildSeqIdx = 0;
+
+const BUILD_SEQ = [48, 48, 55, 51, 48, 60, 55, 51]; // MIDI, C3 root
+const BUILD_STEP_MS = 320;
+
+function buildHas(part) { return buildStep >= BUILD_PARTS[part]; }
+
+// --- Ghost box for blocks not yet added ---
+function drawGhostBox(ctx, x, y, s, label) {
+  ctx.save();
+  // Opaque fill so a signal line passing through an empty slot is hidden
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath(); ctx.roundRect(x, y, s, s, 6); ctx.fill();
+  ctx.strokeStyle = '#e4e4e4';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([4, 4]);
+  ctx.beginPath(); ctx.roundRect(x, y, s, s, 6); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#dcdcdc';
+  ctx.font = `600 ${Math.round(s * 0.15)}px Source Code Pro, monospace`;
+  ctx.textAlign = 'center';
+  ctx.fillText(label, x + s / 2, y + s / 2 + s * 0.05);
+  ctx.restore();
+}
+
+// --- LFO icon: a slow sine, purple like the LFO slide ---
+function drawIconLFO(ctx, x, y, s) {
+  drawModuleBox(ctx, x, y, s, '#7b1fa2');
+  const inn = getInner(x, y, s);
+  const midY = (inn.t + inn.b) / 2;
+  const amp = (inn.b - inn.t) * 0.38;
+  ctx.strokeStyle = '#231f20'; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
+  ctx.beginPath();
+  for (let i = 0; i <= inn.w; i++) {
+    const px = inn.l + i;
+    const py = midY - Math.sin((i / inn.w) * Math.PI * 2) * amp;
+    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  }
+  ctx.stroke();
+  ctx.lineCap = 'butt';
+  drawModuleDivider(ctx, x, y, s);
+  drawModuleLabel(ctx, x, y, s, 'LFO');
+}
+
+// --- Attenuator icon: a knob whose pointer tracks the actual depth ---
+function drawIconATT(ctx, x, y, s) {
+  drawModuleBox(ctx, x, y, s, '#7b1fa2');
+  const inn = getInner(x, y, s);
+  const cy = (inn.t + inn.b) / 2;
+  const rad = Math.min(inn.w, inn.b - inn.t) * 0.36;
+  ctx.strokeStyle = '#231f20'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.arc(inn.cx, cy, rad, 0, Math.PI * 2); ctx.stroke();
+  // Pointer sweeps the usual 270 degrees, from 7 o'clock round to 5 o'clock
+  const a = Math.PI * 0.75 + (buildLfoDepth / 100) * Math.PI * 1.5;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(inn.cx, cy);
+  ctx.lineTo(inn.cx + Math.cos(a) * rad, cy + Math.sin(a) * rad);
+  ctx.stroke();
+  ctx.lineCap = 'butt';
+  drawModuleDivider(ctx, x, y, s);
+  drawModuleLabel(ctx, x, y, s, 'ATT');
+}
+
+// --- Pitch source icon: a stepped CV staircase, deliberately not a keyboard ---
+function drawIconPitch(ctx, x, y, s) {
+  drawModuleBox(ctx, x, y, s, '#0066cc');
+  const inn = getInner(x, y, s);
+  const levels = [0.85, 0.85, 0.35, 0.6, 0.1, 0.6];
+  const stepW = inn.w / levels.length;
+  ctx.strokeStyle = '#231f20'; ctx.lineWidth = 1.5;
+  ctx.lineJoin = 'round';
+  ctx.beginPath();
+  levels.forEach((lv, i) => {
+    const py = inn.t + (inn.b - inn.t) * lv;
+    const px = inn.l + i * stepW;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    ctx.lineTo(px + stepW, py);
+  });
+  ctx.stroke();
+  drawModuleDivider(ctx, x, y, s);
+  drawModuleLabel(ctx, x, y, s, 'SEQ');
+}
+
+function drawBuildVoice() {
+  const r = initCanvas('buildCanvas', 900, 420);
   if (!r) return;
   const { ctx, w, h } = r;
 
-  const margin = w * 0.03;
-  const nCols = 6; // KB, VCOs, Mixer, LPF, VCA, Output
+  const margin = w * 0.02;
+  const nCols = 5; // PITCH, VCO, VCF, VCA, OUT
+  const iconS = Math.min(h * 0.30, (w - margin * 2) / (nCols * 1.42));
+  const modS = iconS * 0.72;
 
-  // Size icons to fill width comfortably
-  const iconS = Math.min(h * 0.26, (w - margin * 2) / (nCols * 1.55));
-  const envS = iconS * 0.6;
-  const vcoGap = iconS * 0.12;
-
-  // Distribute columns across full width
   const usableW = w - margin * 2 - iconS;
   const colStep = usableW / (nCols - 1);
   const cols = [];
   for (let i = 0; i < nCols; i++) cols.push(margin + i * colStep);
 
-  // VCO stack: 3 icons vertically centered
-  const vcoStackH = 3 * iconS + 2 * vcoGap;
-  const vcoStackTop = Math.max(4, (h * 0.58 - vcoStackH) / 2);
-
-  // Main row aligns to middle VCO
-  const mainY = vcoStackTop + iconS + vcoGap;
+  const mainY = h * 0.13;
   const midY = mainY + iconS / 2;
+  const modY = mainY + iconS + h * 0.20;
 
-  // --- Draw Keyboard (col 0) ---
-  drawIconKeyboard(ctx, cols[0], mainY, iconS);
+  // Signal path goes blue while audio is running, grey otherwise
+  const flow = buildPlaying ? '#0066cc' : '#ccc';
 
-  // --- Draw 3 VCOs stacked (col 1) ---
-  const vcoYs = [0, 1, 2].map(i => vcoStackTop + i * (iconS + vcoGap));
-  vcoYs.forEach(vy => drawIconVCO(ctx, cols[1], vy, iconS));
-
-  // --- Draw Mixer, LPF, VCA, Output (cols 2–5) ---
-  const rightFns = [drawIconMixer, drawIconLPF, drawIconVCA, drawIconOutput];
-  rightFns.forEach((fn, i) => fn(ctx, cols[2 + i], mainY, iconS));
-
-  // --- Smooth curves: Keyboard → each VCO (fan out) ---
-  const kbRight = cols[0] + iconS + 4;
-  const vcoLeft = cols[1] - 4;
-  const halfGap = (vcoLeft - kbRight) / 2;
-  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-  vcoYs.forEach(vy => {
-    const vcoMidY = vy + iconS / 2;
-    ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(kbRight, midY);
-    ctx.bezierCurveTo(kbRight + halfGap, midY, vcoLeft - halfGap, vcoMidY, vcoLeft, vcoMidY);
-    ctx.stroke();
-    // Arrowhead
-    ctx.fillStyle = '#ccc'; ctx.beginPath();
-    ctx.moveTo(vcoLeft, vcoMidY);
-    ctx.lineTo(vcoLeft - 7, vcoMidY - 3.5);
-    ctx.lineTo(vcoLeft - 7, vcoMidY + 3.5);
-    ctx.closePath(); ctx.fill();
-  });
-
-  // --- Smooth curves: each VCO → Mixer (fan in) ---
-  const vcoRight = cols[1] + iconS + 4;
-  const mixLeft = cols[2] - 4;
-  const halfGap2 = (mixLeft - vcoRight) / 2;
-  vcoYs.forEach(vy => {
-    const vcoMidY = vy + iconS / 2;
-    ctx.strokeStyle = '#ccc'; ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(vcoRight, vcoMidY);
-    ctx.bezierCurveTo(vcoRight + halfGap2, vcoMidY, mixLeft - halfGap2, midY, mixLeft, midY);
-    ctx.stroke();
-    // Arrowhead
-    ctx.fillStyle = '#ccc'; ctx.beginPath();
-    ctx.moveTo(mixLeft, midY);
-    ctx.lineTo(mixLeft - 7, midY - 3.5);
-    ctx.lineTo(mixLeft - 7, midY + 3.5);
-    ctx.closePath(); ctx.fill();
-  });
-  ctx.lineCap = 'butt';
-
-  // --- Smooth arrows: Mixer → LPF → VCA → Output ---
-  for (let i = 2; i < 5; i++) {
-    const x1 = cols[i] + iconS + 4;
-    const x2 = cols[i + 1] - 4;
-    drawSmoothArrow(ctx, x1, midY, x2, midY, '#ccc');
+  // --- Main row ---
+  const main = [
+    { key: 'pitch', label: 'SEQ',   fn: drawIconPitch },
+    { key: 'vco',   label: 'VCO',   fn: drawIconVCO },
+    { key: 'vcf',   label: 'VCF',   fn: drawIconLPF },
+    { key: 'vca',   label: 'VCA',   fn: drawIconVCA },
+    { key: 'out',   label: 'OUT',   fn: drawIconOutput }
+  ];
+  // --- Audio connectors first, so the boxes drawn over them occlude any line
+  // that crosses an empty slot ---
+  // The chain skips any block that has not been added yet, so the signal
+  // always reaches the output.
+  const activeIdx = main.map((m, i) => buildHas(m.key) ? i : -1).filter(i => i >= 1);
+  for (let k = 0; k < activeIdx.length - 1; k++) {
+    const a = activeIdx[k], b = activeIdx[k + 1];
+    drawSmoothArrow(ctx, cols[a] + iconS + 4, midY, cols[b] - 4, midY, flow);
+  }
+  // Pitch source feeds the VCO as CV, drawn in blue whether or not it is playing
+  if (buildHas('pitch')) {
+    drawSmoothArrow(ctx, cols[0] + iconS + 4, midY, cols[1] - 4, midY, '#0066cc');
   }
 
-  // --- Envelopes below LPF (col 3) and VCA (col 4) ---
-  const envY = mainY + iconS + colStep * 0.25;
-  [3, 4].forEach(colIdx => {
-    const modX = cols[colIdx];
-    const envX = modX + (iconS - envS) / 2;
-    const cx = modX + iconS / 2;
-    const color = colIdx === 3 ? '#cc4400' : '#2e7d32';
-    drawDashedArrowUp(ctx, cx, envY, mainY + iconS + 3, color);
-    drawModuleBox(ctx, envX, envY, envS, color);
-    drawIconADSR(ctx, envX, envY, envS);
+  main.forEach((m, i) => {
+    if (buildHas(m.key)) m.fn(ctx, cols[i], mainY, iconS);
+    else drawGhostBox(ctx, cols[i], mainY, iconS, m.label);
   });
 
-  // Gate label
-  const lpfCx = cols[3] + iconS / 2;
-  const vcaCx = cols[4] + iconS / 2;
-  ctx.fillStyle = '#999';
-  ctx.font = '10px Source Code Pro, monospace';
-  ctx.textAlign = 'center';
-  ctx.fillText('Gate', (lpfCx + vcaCx) / 2, envY + envS + 14);
+  // --- Modulation row ---
+  // LFO and its attenuator on the left, then the two envelopes sitting under
+  // the blocks they drive. The LFO reaches the filter through the attenuator,
+  // so by step 7 the cutoff has two sources on it: one that repeats and one
+  // that fires per note.
+  const vcfCx = cols[2] + iconS / 2;
+  const vcaCx = cols[3] + iconS / 2;
+  const modTop = mainY + iconS;
+  const elbowY = modTop + (modY - modTop) * 0.45;
+  const off = iconS * 0.17; // keeps the two cutoff cables from overlapping
+
+  // LFO into the attenuator
+  if (buildHas('lfo')) {
+    drawSmoothArrow(ctx,
+      cols[0] + (iconS + modS) / 2 + 4, modY + modS / 2,
+      cols[1] + (iconS - modS) / 2 - 4, modY + modS / 2, '#7b1fa2');
+  }
+  // Attenuator up and across into the cutoff, landing right of centre
+  if (buildHas('att') && buildHas('vcf')) {
+    const attCx = cols[1] + iconS / 2;
+    const tipX = vcfCx + off;
+    ctx.strokeStyle = '#7b1fa2'; ctx.lineWidth = 1.5;
+    ctx.lineJoin = 'round';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(attCx, modY);
+    ctx.lineTo(attCx, elbowY);
+    ctx.lineTo(tipX, elbowY);
+    ctx.lineTo(tipX, modTop + 3);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#7b1fa2';
+    ctx.beginPath();
+    ctx.moveTo(tipX, modTop + 3);
+    ctx.lineTo(tipX - 4, modTop + 11);
+    ctx.lineTo(tipX + 4, modTop + 11);
+    ctx.closePath(); ctx.fill();
+  }
+  // Filter envelope into the cutoff, landing left of centre
+  if (buildHas('feg') && buildHas('vcf')) {
+    drawDashedArrowUp(ctx, vcfCx - off, modY, modTop + 3, '#cc4400');
+  }
+  // Amp envelope into the VCA. The envelope arrives one step before the VCA,
+  // and until then there is deliberately no cable at all.
+  if (buildHas('aeg') && buildHas('vca')) {
+    drawDashedArrowUp(ctx, vcaCx, modY, modTop + 3, '#2e7d32');
+  }
+
+  const modSlots = [
+    { key: 'lfo', col: 0, label: 'LFO', draw: (x, y) => drawIconLFO(ctx, x, y, modS) },
+    { key: 'att', col: 1, label: 'ATT', draw: (x, y) => drawIconATT(ctx, x, y, modS) },
+    { key: 'feg', col: 2, label: 'EG',
+      draw: (x, y) => { drawModuleBox(ctx, x, y, modS, '#cc4400'); drawIconADSR(ctx, x, y, modS); } },
+    { key: 'aeg', col: 3, label: 'EG',
+      draw: (x, y) => { drawModuleBox(ctx, x, y, modS, '#2e7d32'); drawIconADSR(ctx, x, y, modS); } }
+  ];
+
+  modSlots.forEach(slot => {
+    const x = cols[slot.col] + (iconS - modS) / 2;
+    if (buildHas(slot.key)) slot.draw(x, modY);
+    else drawGhostBox(ctx, x, modY, modS, slot.label);
+  });
+
+  // --- Gate bus ---
+  // The sequencer sends a pitch voltage and a gate. Drawing the gate explicitly
+  // is what makes the envelope step read: it is being triggered on every step
+  // and still doing nothing audible, because it drives nothing yet.
+  const gatedCols = [];
+  if (buildHas('feg')) gatedCols.push(2);
+  if (buildHas('aeg')) gatedCols.push(3);
+
+  if (gatedCols.length) {
+    const busY = modY + modS + 18;
+    const srcX = cols[0] + iconS / 2;
+    const lastX = cols[Math.max(...gatedCols)] + iconS / 2;
+    // Run down the outside of the rack rather than straight down, so the gate
+    // clears the LFO now sitting in the modulation row under the sequencer.
+    const sideX = margin * 0.35;
+    const jogY = mainY + iconS + (modY - mainY - iconS) * 0.25;
+    ctx.strokeStyle = '#2e7d32';
+    ctx.lineWidth = 1.5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    ctx.moveTo(srcX, mainY + iconS);
+    ctx.lineTo(srcX, jogY);
+    ctx.lineTo(sideX, jogY);
+    ctx.lineTo(sideX, busY);
+    ctx.lineTo(lastX, busY);
+    ctx.stroke();
+    // Stub up into each envelope, with an arrowhead at the box edge
+    gatedCols.forEach(c => {
+      const cx = cols[c] + iconS / 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, busY);
+      ctx.lineTo(cx, modY + modS + 6);
+      ctx.stroke();
+      ctx.fillStyle = '#2e7d32';
+      ctx.beginPath();
+      ctx.moveTo(cx, modY + modS);
+      ctx.lineTo(cx - 4, modY + modS + 8);
+      ctx.lineTo(cx + 4, modY + modS + 8);
+      ctx.closePath();
+      ctx.fill();
+    });
+    ctx.lineCap = 'butt';
+    ctx.fillStyle = '#2e7d32';
+    ctx.font = '600 10px Source Code Pro, monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('Gate', sideX + 6, busY - 5);
+  }
 }
+
+// --- Audio ---
+function buildApplyStep() {
+  if (!buildNodes) return;
+  const ctx = getAudioCtx();
+  const now = ctx.currentTime;
+  const n = buildNodes;
+
+  n.osc.type = buildWave;
+
+  // Filter: effectively bypassed until it is added
+  n.filter.frequency.cancelScheduledValues(now);
+  n.filter.Q.value = buildHas('feg') ? 7 : (buildHas('vcf') ? 3 : 0.0001);
+  const cutoff = buildHas('feg') ? 300 : (buildHas('vcf') ? 900 : 20000);
+  n.filter.frequency.setValueAtTime(cutoff, now);
+
+  // VCA: a fixed level until the envelope takes it over
+  n.vca.gain.cancelScheduledValues(now);
+  if (buildHas('vca')) n.vca.gain.setValueAtTime(0.0001, now);
+  else n.vca.gain.setTargetAtTime(0.22, now, 0.02);
+
+  // LFO depth, in Hz of cutoff swing. This sums with whatever the filter
+  // envelope schedules on the same param, which is the point of step 7.
+  n.lfoGain.gain.cancelScheduledValues(now);
+  n.lfoGain.gain.setTargetAtTime(buildHas('lfo') ? buildDepthHz() : 0, now, 0.05);
+
+  // Hold one note until the pitch source arrives
+  if (!buildHas('pitch')) {
+    n.osc.frequency.cancelScheduledValues(now);
+    n.osc.frequency.setValueAtTime(midiToFreq(48), now);
+  }
+}
+
+function buildClockTick() {
+  if (!buildNodes) return;
+  const ctx = getAudioCtx();
+  const now = ctx.currentTime;
+  const n = buildNodes;
+
+  const midi = BUILD_SEQ[buildSeqIdx];
+  buildSeqIdx = (buildSeqIdx + 1) % BUILD_SEQ.length;
+  n.osc.frequency.setValueAtTime(midiToFreq(midi), now);
+
+  // Amp envelope, once the VCA is in the path
+  if (buildHas('vca')) {
+    const g = n.vca.gain;
+    g.cancelScheduledValues(now);
+    g.setValueAtTime(0.0001, now);
+    g.linearRampToValueAtTime(0.26, now + 0.008);
+    g.exponentialRampToValueAtTime(0.0005, now + 0.28);
+  }
+  // Filter envelope
+  if (buildHas('feg')) {
+    const f = n.filter.frequency;
+    f.cancelScheduledValues(now);
+    f.setValueAtTime(280, now);
+    f.linearRampToValueAtTime(4200, now + 0.012);
+    f.exponentialRampToValueAtTime(320, now + 0.30);
+  }
+}
+
+function buildStartClock() {
+  if (buildClock) clearInterval(buildClock);
+  buildSeqIdx = 0;
+  buildClockTick();
+  buildClock = setInterval(buildClockTick, BUILD_STEP_MS);
+}
+
+function buildStopClock() {
+  if (buildClock) { clearInterval(buildClock); buildClock = null; }
+}
+
+function startBuildAudio() {
+  stopAllAudio();
+  const ctx = getAudioCtx();
+
+  const osc = ctx.createOscillator();
+  osc.type = buildWave;
+  osc.frequency.value = midiToFreq(48);
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'lowpass';
+
+  const vca = ctx.createGain();
+  vca.gain.value = 0;
+
+  const master = ctx.createGain();
+  master.gain.value = 1;
+
+  osc.connect(filter);
+  filter.connect(vca);
+  vca.connect(master);
+  master.connect(ctx.destination);
+
+  // The LFO goes to the filter, not to pitch, and gets there through a gain
+  // node standing in for the attenuator.
+  const lfo = ctx.createOscillator();
+  lfo.type = 'sine';
+  lfo.frequency.value = 3.5;
+  const lfoGain = ctx.createGain();
+  lfoGain.gain.value = 0;
+  lfo.connect(lfoGain);
+  lfoGain.connect(filter.frequency);
+
+  osc.start();
+  lfo.start();
+  activeNodes.push(osc, lfo);
+  activeGains.push(master);
+
+  buildNodes = { osc, filter, vca, lfo, lfoGain, master };
+  buildPlaying = true;
+  buildApplyStep();
+  if (buildHas('pitch')) buildStartClock();
+
+  const btn = document.getElementById('buildAudioBtn');
+  btn.classList.add('playing');
+  btn.textContent = '■ Stop';
+  drawBuildVoice();
+}
+
+function buildUpdateText() {
+  const s = BUILD_STEPS[buildStep];
+  document.getElementById('buildStepLabel').textContent = `Step ${buildStep + 1} of ${BUILD_STEPS.length}`;
+  document.getElementById('buildStepTitle').textContent = s.title;
+  document.getElementById('buildStepBody').textContent = s.body;
+  document.getElementById('buildStepListen').textContent = s.listen;
+  document.getElementById('buildPrevBtn').disabled = buildStep === 0;
+  document.getElementById('buildNextBtn').disabled = buildStep === BUILD_STEPS.length - 1;
+  // The depth control is dead weight until the LFO is on the rack
+  document.getElementById('buildDepthRow').style.display = buildHas('lfo') ? 'flex' : 'none';
+}
+
+function buildGoStep(n) {
+  if (n < 0 || n >= BUILD_STEPS.length) return;
+  buildStep = n;
+  buildUpdateText();
+  drawBuildVoice();
+  if (!buildPlaying) return;
+  buildApplyStep();
+  if (buildHas('pitch')) { if (!buildClock) buildStartClock(); }
+  else buildStopClock();
+}
+
+// --- Build the Voice event listeners ---
+document.getElementById('buildPrevBtn').addEventListener('click', () => buildGoStep(buildStep - 1));
+document.getElementById('buildNextBtn').addEventListener('click', () => buildGoStep(buildStep + 1));
+
+document.getElementById('buildAudioBtn').addEventListener('click', () => {
+  if (buildPlaying) stopAllAudio();
+  else startBuildAudio();
+});
+
+document.getElementById('buildDepth').addEventListener('input', function() {
+  buildLfoDepth = parseInt(this.value);
+  document.getElementById('buildDepthVal').textContent = buildDepthHz() + ' Hz';
+  if (buildNodes && buildHas('lfo')) {
+    const actx = getAudioCtx();
+    buildNodes.lfoGain.gain.cancelScheduledValues(actx.currentTime);
+    buildNodes.lfoGain.gain.setTargetAtTime(buildDepthHz(), actx.currentTime, 0.03);
+  }
+  drawBuildVoice(); // the knob pointer follows the slider
+});
+
+document.querySelectorAll('#buildWaveBtns .wave-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('#buildWaveBtns .wave-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    buildWave = this.dataset.bwave;
+    if (buildNodes) buildNodes.osc.type = buildWave;
+  });
+});
+
+buildUpdateText();
 
 // =============================================
 // DRAW ON SLIDE CHANGE
@@ -5240,28 +6266,37 @@ function drawParadigm() {
 function drawCurrentSlide() {
   requestAnimationFrame(() => {
     switch (current) {
-      case 1: drawSubtractive(); break;
-      case 3: drawVoltage(); break;
-      case 4: drawCVAudio(); break;
-      case 5: drawWaveforms(); break;
-      case 6: drawOvertones(); break;
-      case 7: drawFilter(); break;
-      case 8: drawPitchWave(); break;
-      case 9: drawNoise(); break;
-      case 10: drawVPerOct(); break;
-      case 11: drawPitchSources(); break;
-      case 12: drawGateTrigger(); break;
-      case 13: drawEnvelopeShape(); break;
-      case 14: drawVCA(); break;
-      case 15: drawLFO(); break;
-      case 16: drawEnvMod(); break;
-      case 18: drawParadigm(); break;
+      case 0: drawTitleSynth(); break;
+      case 2: drawVoltage(); break;
+      case 3: drawCVAudio(); break;
+      case 4: drawWaveforms(); break;
+      case 5: drawOvertones(); break;
+      case 6: drawFilter(); break;
+      case 7: drawPitchWave(); break;
+      case 8: drawNoise(); break;
+      case 9: drawVPerOct(); break;
+      case 10: drawPitchSources(); break;
+      case 11: drawGateTrigger(); break;
+      case 12: drawEnvelopeShape(); break;
+      case 13: drawVCA(); break;
+      case 14: drawLFO(); break;
+      case 15: drawEnvMod(); break;
+      case 17: drawBuildVoice(); break;
     }
   });
 }
 
-drawCurrentSlide();
-updateNav();
+// Open on whatever the hash asks for, so a refresh mid-presentation comes back
+// to the same slide instead of the title.
+const startSlide = slideFromHash();
+if (startSlide !== null && startSlide !== current) {
+  goToSlide(startSlide);
+} else {
+  writeHash();  // stamp the hash immediately so the very first refresh is stable
+  drawCurrentSlide();
+  updateNav();
+}
+
 window.addEventListener('resize', () => drawCurrentSlide());
 </script>
 
