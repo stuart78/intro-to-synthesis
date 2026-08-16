@@ -1,6 +1,6 @@
 # Intro to Synthesis
 
-An introductory synthesis workshop, written and taught by Stuart Smith at [Synth Library Portland](https://www.synthlibraryportland.org).
+An introductory synthesis workshop, written and taught by Stuart Frederich-Smith at [Synth Library Portland](https://www.synthlibraryportland.org).
 
 Two hours, no prior experience assumed. It starts from what a voltage is and ends with the room patching a complete subtractive voice and then taking it apart. Everything here is the material I use to run it: the slides, the speaker notes, the outline, and the patches.
 
@@ -57,6 +57,6 @@ images that are not mine to license.
 
 ## Author
 
-Stuart Smith. I design Eurorack and VCV Rack modules as [Signal Function Set](https://signalfunctionset.com).
+Stuart Frederich-Smith. I design Eurorack and VCV Rack modules as [Signal Function Set](https://signalfunctionset.com).
 
 Thanks to [Synth Library Portland](https://www.synthlibraryportland.org) for hosting.

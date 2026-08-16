@@ -1,6 +1,6 @@
 # License
 
-Copyright 2026 Stuart Smith
+Copyright 2026 Stuart Frederich-Smith
 
 ## The workshop materials
 
@@ -12,7 +12,7 @@ International (CC BY-NC 4.0)**.
 - Full legal text: https://creativecommons.org/licenses/by-nc/4.0/legalcode
 
 You may share and adapt this material, including translating it, remixing it and
-building on it, as long as you credit Stuart Smith and do not use it for
+building on it, as long as you credit Stuart Frederich-Smith and do not use it for
 commercial purposes.
 
 ## Additional permission for teaching
