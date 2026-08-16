@@ -4,6 +4,8 @@ An introductory synthesis workshop, written and taught by Stuart Smith at [Synth
 
 Two hours, no prior experience assumed. It starts from what a voltage is and ends with the room patching a complete subtractive voice and then taking it apart. Everything here is the material I use to run it: the slides, the speaker notes, the outline, and the patches.
 
+Run at Synth Library Portland on **29 March 2026** and **16 August 2026**.
+
 ## The deck
 
 `intro-to-synthesis-slides.html` is the whole presentation. Nineteen slides in one HTML file, no build step and no dependencies.
