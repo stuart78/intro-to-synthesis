@@ -47,6 +47,14 @@ The hands-on half uses [VCV Rack](https://vcvrack.com), which is free and runs o
 
 The first four ship with the modules laid out and **no cables**. That is deliberate: the room patches them. Each rack carries a Notes module with the brief written on it, so anyone who arrives late or falls behind can read ahead.
 
+## License
+
+[CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/), with one
+deliberate exception: **you may teach workshops from this material, including
+ones you charge for.** Credit me, do not sell the material itself, and otherwise
+help yourself. See [LICENSE.md](LICENSE.md) for the detail, including the two
+images that are not mine to license.
+
 ## Author
 
 Stuart Smith. I design Eurorack and VCV Rack modules as [Signal Function Set](https://signalfunctionset.com).
